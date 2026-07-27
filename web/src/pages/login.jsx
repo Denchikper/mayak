@@ -50,7 +50,7 @@ export default function Login() {
         />
         <div className="w-px h-8 bg-[var(--surface-2)] mx-3"></div>
         <h1 className="text-[15px] font-semibold text-[var(--text)]">
-          Система управления звуковыми оповещениями
+          Маяк
         </h1>
       </header>
 
