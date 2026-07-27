@@ -1,16 +1,16 @@
 services:
   db:
     image: postgres:16-alpine
-    container_name: sca-db
+    container_name: mayak-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${DATABASE_NAME:-system_control_alerts}
+      POSTGRES_DB: ${DATABASE_NAME:-mayak}
       POSTGRES_USER: ${DATABASE_USER:-postgres}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
     volumes:
-      - sca-db-data:/var/lib/postgresql/data
+      - mayak-db-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-postgres} -d ${DATABASE_NAME:-system_control_alerts}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-postgres} -d ${DATABASE_NAME:-mayak}"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -19,7 +19,7 @@ services:
 
   server:
     image: ghcr.io/denchikper/mayak-server:latest
-    container_name: sca-server
+    container_name: mayak-server
     restart: unless-stopped
     depends_on:
       db:
@@ -30,7 +30,7 @@ services:
       SERVER_PORT: ${SERVER_PORT:-2255}
       DATABASE_HOST: ${DATABASE_HOST:-db}
       DATABASE_PORT: ${DATABASE_PORT:-5432}
-      DATABASE_NAME: ${DATABASE_NAME:-system_control_alerts}
+      DATABASE_NAME: ${DATABASE_NAME:-mayak}
       DATABASE_USER: ${DATABASE_USER:-postgres}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD:-postgres}
       JWT_SECRET: ${JWT_SECRET:-change-me}
@@ -43,7 +43,7 @@ services:
 
   web:
     image: ghcr.io/denchikper/mayak-web:latest
-    container_name: sca-web
+    container_name: mayak-web
     restart: unless-stopped
     depends_on:
       - server
@@ -54,4 +54,4 @@ services:
       - "${WEB_PORT:-3000}:3000"
 
 volumes:
-  sca-db-data:
+  mayak-db-data:

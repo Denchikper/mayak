@@ -3,7 +3,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: sca-server
+    container_name: mayak-server
     restart: unless-stopped
     network_mode: host
     environment:
@@ -12,7 +12,7 @@ services:
       SERVER_PORT: ${SERVER_PORT:-2255}
       DATABASE_HOST: ${DATABASE_HOST:-127.0.0.1}
       DATABASE_PORT: ${DATABASE_PORT:-5432}
-      DATABASE_NAME: ${DATABASE_NAME:-system_control_alerts}
+      DATABASE_NAME: ${DATABASE_NAME:-mayak}
       DATABASE_USER: ${DATABASE_USER:-postgres}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD:-postgres}
       JWT_SECRET: ${JWT_SECRET:-change-me}
@@ -24,7 +24,7 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_API_URL: ${VITE_API_URL:-/api}
-    container_name: sca-web
+    container_name: mayak-web
     restart: unless-stopped
     depends_on:
       - server
