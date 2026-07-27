@@ -3,7 +3,7 @@
 ## Структура
 
 ```bash
-system-control-alerts/
+mayak/
 ├── server/                     # Backend (Node.js + Express + WS + Sequelize)
 ├── web/                        # Frontend (React + Vite + Tailwind)
 ├── devices/                    # Прошивки и схемы устройств (ESP)
@@ -200,15 +200,14 @@ docker compose -f docker-compose.hostnet.yaml logs -f
 
 Что он делает:
 
-- на `push` в `main` собирает `server` и `web`
-- публикует Docker-образы в `ghcr.io`
-- на тегах `v*` публикует тегированные образы
-- на `pull_request` только проверяет сборку без публикации
+- срабатывает только на push тега `v*` (или вручную через `workflow_dispatch`)
+- собирает `server` и `web`, публикует Docker-образы в `ghcr.io` с тегами `latest` и версией тега
+- создаёт черновик GitHub Release с автосгенерированными release notes
 
 Имена образов:
 
-- `ghcr.io/<owner>/system-control-alerts-server`
-- `ghcr.io/<owner>/system-control-alerts-web`
+- `ghcr.io/<owner>/mayak-server`
+- `ghcr.io/<owner>/mayak-web`
 
 Запуск из готовых образов GHCR:
 
@@ -220,16 +219,16 @@ docker compose -f docker-compose.ghcr.yaml up -d
 #### Что нужно для работы CI/CD
 
 - репозиторий должен быть на GitHub
-- workflow запускается после `push` в `main`
+- workflow запускается только на push тега вида `v1.2.3`
 - публикация идёт в `ghcr.io` через встроенный `GITHUB_TOKEN`
 - образы публикуются автоматически, отдельный ручной логин в workflow не нужен
 
 #### Какие образы публикуются
 
-- backend: `ghcr.io/<owner>/system-control-alerts-server`
-- frontend: `ghcr.io/<owner>/system-control-alerts-web`
+- backend: `ghcr.io/<owner>/mayak-server`
+- frontend: `ghcr.io/<owner>/mayak-web`
 
-`latest` публикуется для default branch, также создаются теги по branch/tag/sha.
+Каждый тег публикует `latest` и версию тега (например `v1.2.3`).
 
 #### Как обновлять сервер из GHCR
 
@@ -244,8 +243,8 @@ docker compose -f docker-compose.ghcr.yaml up -d
 
 Если сервер доступен только из локальной сети, рабочая схема такая:
 
-1. Вы пушите изменения в `main`
-2. GitHub Actions публикует новые образы в `ghcr.io`
+1. Вы ставите тег `vX.Y.Z` и пушите его (`git push origin vX.Y.Z`)
+2. GitHub Actions публикует новые образы в `ghcr.io` и создаёт черновик Release
 3. Вы заходите на сервер вручную
 4. В папке проекта выполняете:
 
@@ -274,11 +273,12 @@ docker compose -f docker-compose.ghcr.yaml up -d
 
 #### Полезный сценарий релиза
 
-1. Внести изменения в `server` или `web`
-2. Запушить в `main`
-3. Дождаться завершения workflow `Publish Docker Images`
-4. На сервере выполнить `docker compose -f docker-compose.ghcr.yaml pull`
-5. На сервере выполнить `docker compose -f docker-compose.ghcr.yaml up -d`
+1. Внести изменения в `server` или `web`, запушить в `main` (сборка образов при этом НЕ запускается)
+2. Когда готовы к релизу: `git tag vX.Y.Z && git push origin vX.Y.Z`
+3. Дождаться завершения workflow `Publish Docker Images` — соберёт образы и создаст черновик Release
+4. Опубликовать (Publish) черновик Release на GitHub
+5. На сервере выполнить `docker compose -f docker-compose.ghcr.yaml pull`
+6. На сервере выполнить `docker compose -f docker-compose.ghcr.yaml up -d`
 
 #### Что использовать для деплоя
 
