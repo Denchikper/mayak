@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { changeMyPassword } from "../../api/users/users";
 
 const fieldClass =
-  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition";
+  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--beacon)] focus:border-[var(--beacon)] transition";
 const labelClass = "block text-xs text-[var(--text-muted)] mb-1.5";
 
 export default function PasswordTab({ token, logout, navigate }) {
@@ -32,7 +32,7 @@ export default function PasswordTab({ token, logout, navigate }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 shadow-sm max-w-md space-y-4">
+    <form onSubmit={handleSubmit} className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-5 shadow-sm max-w-md space-y-4">
       <h2 className="text-base font-semibold">Смена пароля</h2>
 
       <div>
@@ -44,13 +44,13 @@ export default function PasswordTab({ token, logout, navigate }) {
         <input className={fieldClass} type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="••••••" />
       </div>
 
-      {err && <p className="text-red-400 text-sm">{err}</p>}
-      {msg && <p className="text-green-400 text-sm">{msg}</p>}
+      {err && <p className="text-[var(--alarm)] text-sm">{err}</p>}
+      {msg && <p className="text-[var(--safe)] text-sm">{msg}</p>}
 
       <button
         type="submit"
         disabled={saving}
-        className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors disabled:opacity-60"
+        className="px-4 py-2 rounded-lg bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] text-sm font-medium cursor-pointer transition-colors disabled:opacity-60"
       >
         {saving ? "Сохранение..." : "Сменить пароль"}
       </button>
