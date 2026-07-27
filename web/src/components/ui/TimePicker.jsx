@@ -18,7 +18,7 @@ export default function TimePicker({ value, onChange }) {
       {/* input button */}
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex justify-between items-center px-3 py-2 bg-[var(--surface-2)] border border-[var(--border)] rounded-lg text-sm text-[var(--text)] hover:border-blue-500 transition-colors"
+        className="w-full flex justify-between items-center px-3 py-2 bg-[var(--surface-2)] border border-[var(--border)] rounded-lg text-sm text-[var(--text)] hover:border-[var(--beacon)] transition-colors"
       >
         <span>{h}</span>
         <span className="text-[var(--text-muted)]">:</span>
@@ -43,8 +43,8 @@ export default function TimePicker({ value, onChange }) {
               <button
                 key={hour}
                 onClick={() => onChange(`${hour}:${m}`)}
-                className={`w-full px-3 py-2 text-sm text-left hover:bg-blue-600 transition-colors ${
-                  hour === h ? "bg-blue-700 text-white font-bold" : "text-[var(--text)]"
+                className={`w-full px-3 py-2 text-sm text-left hover:bg-[var(--beacon)] hover:text-[#0A0F16] transition-colors ${
+                  hour === h ? "bg-[var(--beacon-strong)] text-[#0A0F16] font-bold" : "text-[var(--text)]"
                 }`}
               >
                 {hour}
@@ -58,8 +58,8 @@ export default function TimePicker({ value, onChange }) {
               <button
                 key={min}
                 onClick={() => onChange(`${h}:${min}`)}
-                className={`w-full px-3 py-2 text-sm text-left hover:bg-blue-600 transition-colors ${
-                  min === m ? "bg-blue-700 text-white font-bold" : "text-[var(--text)]"
+                className={`w-full px-3 py-2 text-sm text-left hover:bg-[var(--beacon)] hover:text-[#0A0F16] transition-colors ${
+                  min === m ? "bg-[var(--beacon-strong)] text-[#0A0F16] font-bold" : "text-[var(--text)]"
                 }`}
               >
                 {min}

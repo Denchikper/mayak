@@ -2,7 +2,7 @@ import React from "react";
 
 export default function StyledSelect({ style, options, value, onChange, placeholder }) {
   // базовый класс
-  const baseClass = "appearance-none w-full bg-[var(--surface)] text-[var(--text)] border border-[var(--border)] rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200";
+  const baseClass = "appearance-none w-full bg-[var(--surface)] text-[var(--text)] border border-[var(--border)] rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-[var(--beacon)] focus:border-[var(--beacon)] transition-all duration-200";
 
   return (
     <div className="relative inline-block w-full">

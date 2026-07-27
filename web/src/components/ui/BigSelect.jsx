@@ -22,7 +22,7 @@ export default function BigSelect({ value, onChange, options, placeholder = "В�
         type="button"
         disabled={disabled}
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between gap-2 bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-left text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition disabled:opacity-50 cursor-pointer"
+        className="w-full flex items-center justify-between gap-2 bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-left text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--beacon)] focus:border-[var(--beacon)] transition disabled:opacity-50 cursor-pointer"
       >
         <span className={selected ? "" : "text-[var(--text-muted)]"}>
           {selected ? selected.label : placeholder}
@@ -34,7 +34,7 @@ export default function BigSelect({ value, onChange, options, placeholder = "В�
       </button>
 
       {open && (
-        <div className="absolute z-30 mt-2 w-full max-h-72 overflow-y-auto bg-[var(--surface)] border border-[var(--border)] rounded-xl shadow-xl py-1 custom-scrollbar animate-fadeIn">
+        <div className="absolute z-30 mt-2 w-full max-h-72 overflow-y-auto bg-[var(--surface)] border border-[var(--border)] rounded-md shadow-xl py-1 custom-scrollbar animate-fadeIn">
           {options.length === 0 ? (
             <div className="px-3 py-2.5 text-sm text-[var(--text-muted)]">Список пуст</div>
           ) : (
@@ -50,7 +50,7 @@ export default function BigSelect({ value, onChange, options, placeholder = "В�
                   }}
                   className={`w-full flex items-center justify-between gap-2 text-left px-3 py-2.5 text-sm cursor-pointer transition-colors ${
                     active
-                      ? "bg-blue-600/15 text-blue-400"
+                      ? "bg-[var(--beacon)]/15 text-[var(--beacon)]"
                       : "text-[var(--text)] hover:bg-[var(--surface-2)]"
                   }`}
                 >

@@ -41,7 +41,7 @@ export default function ProfileMenu() {
           <p className="text-sm text-[var(--text-muted)] text-center">Роль: {user?.role}</p>
           <button
             onClick={logout}
-            className="mt-4 w-full py-1 bg-red-600 hover:bg-red-700 rounded-md text-white font-medium transition cursor-pointer"
+            className="mt-4 w-full py-1 bg-[var(--alarm)] hover:bg-[var(--alarm-strong)] rounded-md text-[#0A0F16] font-medium transition cursor-pointer"
           >
             Выйти
           </button>
