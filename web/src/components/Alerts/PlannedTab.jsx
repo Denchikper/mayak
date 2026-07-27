@@ -36,7 +36,7 @@ function toLocalInput(value) {
 }
 
 const fieldClass =
-  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition";
+  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--beacon)] focus:border-[var(--beacon)] transition";
 const labelClass = "block text-xs text-[var(--text-muted)] mb-1.5";
 
 export default function PlannedTab({ token, logout, navigate }) {
@@ -172,7 +172,7 @@ export default function PlannedTab({ token, logout, navigate }) {
         {!formOpen && (
           <button
             onClick={openCreate}
-            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors shrink-0"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-md bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] text-sm font-medium cursor-pointer transition-colors shrink-0"
           >
             <Plus size={18} /> <span className="hidden sm:inline">Добавить</span>
           </button>
@@ -183,7 +183,7 @@ export default function PlannedTab({ token, logout, navigate }) {
       {formOpen && (
         <form
           onSubmit={handleSubmit}
-          className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-4 sm:p-5 mb-6 shadow-sm animate-modalEnter"
+          className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 sm:p-5 mb-6 shadow-sm animate-modalEnter"
         >
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium text-[var(--text)]">
@@ -256,7 +256,7 @@ export default function PlannedTab({ token, logout, navigate }) {
           <label className="flex items-center gap-2 text-sm text-[var(--text-soft)] cursor-pointer mt-4">
             <input
               type="checkbox"
-              className="accent-blue-600 w-4 h-4"
+              className="accent-[var(--beacon)] w-4 h-4"
               checked={form.is_active}
               onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
             />
@@ -266,7 +266,7 @@ export default function PlannedTab({ token, logout, navigate }) {
           <div className="flex gap-3 mt-5">
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors"
+              className="px-4 py-2 rounded-md bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] text-sm font-medium cursor-pointer transition-colors"
             >
               {editingId ? "Сохранить" : "Создать"}
             </button>
@@ -281,7 +281,7 @@ export default function PlannedTab({ token, logout, navigate }) {
         </form>
       )}
 
-      {error && <p className="text-red-400 text-center mb-3">{error}</p>}
+      {error && <p className="text-[var(--alarm)] text-center mb-3">{error}</p>}
 
       {/* Список */}
       {loading ? (
@@ -293,7 +293,7 @@ export default function PlannedTab({ token, logout, navigate }) {
             <p>Пока нет запланированных оповещений</p>
             <button
               onClick={openCreate}
-              className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors"
+              className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-md bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] text-sm font-medium cursor-pointer transition-colors"
             >
               <Plus size={18} /> Добавить первое
             </button>
@@ -304,7 +304,7 @@ export default function PlannedTab({ token, logout, navigate }) {
           {alerts.map((alert) => (
             <div
               key={alert.id}
-              className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-4 shadow-sm hover:border-blue-500/60 transition-colors"
+              className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 shadow-sm hover:border-[var(--beacon)]/60 transition-colors"
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="min-w-0">
@@ -313,7 +313,7 @@ export default function PlannedTab({ token, logout, navigate }) {
                     <span
                       className={`text-[11px] px-2 py-0.5 rounded-full font-medium ${
                         alert.is_active
-                          ? "bg-green-500/15 text-green-400"
+                          ? "bg-[var(--safe)]/15 text-[var(--safe)]"
                           : "bg-[var(--surface-2)] text-[var(--text-muted)]"
                       }`}
                     >
@@ -343,7 +343,7 @@ export default function PlannedTab({ token, logout, navigate }) {
                     title={alert.is_active ? "Выключить" : "Включить"}
                     className={`p-2 rounded-lg cursor-pointer transition-colors ${
                       alert.is_active
-                        ? "bg-green-600/15 text-green-400 hover:bg-green-600/25"
+                        ? "bg-[var(--safe)]/15 text-[var(--safe)] hover:bg-[var(--safe)]/25"
                         : "bg-[var(--surface-2)] text-[var(--text-muted)] hover:bg-[var(--surface-3)]"
                     }`}
                   >
@@ -359,7 +359,7 @@ export default function PlannedTab({ token, logout, navigate }) {
                   <button
                     onClick={() => handleDelete(alert.id)}
                     title="Удалить"
-                    className="p-2 rounded-lg bg-red-600/15 text-red-400 hover:bg-red-600/25 cursor-pointer transition-colors"
+                    className="p-2 rounded-md bg-[var(--alarm)]/15 text-[var(--alarm)] hover:bg-[var(--alarm)]/25 cursor-pointer transition-colors"
                   >
                     <Trash2 size={16} />
                   </button>

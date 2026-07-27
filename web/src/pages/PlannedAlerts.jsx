@@ -13,7 +13,7 @@ export default function PlannedAlertsPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Запланированные оповещения | СУЗО";
+    document.title = "Запланированные оповещения | Маяк";
   }, []);
 
   return (
@@ -23,11 +23,11 @@ export default function PlannedAlertsPage() {
 
         {/* Переключатель по центру */}
         <div className="mb-8">
-          <div className="inline-flex bg-[var(--surface-2)] rounded-xl p-1">
+          <div className="inline-flex bg-[var(--surface-2)] rounded-md p-1">
             <button
               onClick={() => setActiveTab("school")}
               className={`px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm transition
-                ${activeTab === "school" ? "bg-blue-600 text-white" : "text-[var(--text-muted)] hover:text-[var(--text)]" }`}
+                ${activeTab === "school" ? "bg-[var(--beacon)] text-[#0A0F16]" : "text-[var(--text-muted)] hover:text-[var(--text)]" }`}
             >
               Школьные звонки
             </button>
@@ -35,7 +35,7 @@ export default function PlannedAlertsPage() {
             <button
               onClick={() => setActiveTab("planned")}
               className={`px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm transition
-                ${activeTab === "planned" ? "bg-blue-600 text-white" : "text-[var(--text-muted)] hover:text-[var(--text)]" }`}
+                ${activeTab === "planned" ? "bg-[var(--beacon)] text-[#0A0F16]" : "text-[var(--text-muted)] hover:text-[var(--text)]" }`}
             >
               Запланированные оповещения
             </button>
@@ -43,7 +43,7 @@ export default function PlannedAlertsPage() {
         </div>
 
         {/* Контент */}
-        <div className="w-full rounded-xl p-2 scrollbar-hidden overflow-y-auto scrollbar-hidden">
+        <div className="w-full rounded-md p-2 scrollbar-hidden overflow-y-auto scrollbar-hidden">
           {loading && <p className="text-center text-[var(--text-muted)]">Загрузка...</p>}
 
           {activeTab === "school" && !loading && (

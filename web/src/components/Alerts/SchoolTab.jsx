@@ -128,7 +128,7 @@ export default function SchoolTab({ token,  logout, navigate}) {
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
           <div className="w-full sm:w-60">
             <StyledSelect
-              style="appearance-none max-w-60 bg-[var(--surface)] text-[var(--text)] border border-[var(--border)] rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+              style="appearance-none max-w-60 bg-[var(--surface)] text-[var(--text)] border border-[var(--border)] rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-[var(--beacon)] focus:border-[var(--beacon)] transition-all duration-200"
               options={schedules.map((s) => ({ value: s.id, label: s.name }))}
               value={selectedSchedule}
               onChange={(e) => setSelectedSchedule(Number(e.target.value))}
@@ -137,7 +137,7 @@ export default function SchoolTab({ token,  logout, navigate}) {
           </div>
           <button
             onClick={handleSchedule}
-            className="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition-all duration-200 text-sm font-medium cursor-pointer"
+            className="px-5 py-2 rounded-md bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] transition-all duration-200 text-sm font-medium cursor-pointer"
           >
             Активировать
           </button>
@@ -154,7 +154,7 @@ export default function SchoolTab({ token,  logout, navigate}) {
         <div className="flex items-center gap-4 ">
           <span className="inline-flex items-center justify-center w-full sm:w-[280px] px-3 py-1 bg-[var(--surface-2)] text-[var(--text)] text-sm font-medium rounded-full shadow-sm">
             <svg
-              className="w-3 h-3 mr-2 shrink-0 text-green-400"
+              className="w-3 h-3 mr-2 shrink-0 text-[var(--safe)]"
               fill="currentColor"
               viewBox="0 0 8 8"
             >
@@ -166,11 +166,11 @@ export default function SchoolTab({ token,  logout, navigate}) {
           </span>
 
           {selectedSchedule && (
-            <button onClick={() => setIsEditOpen(true)} className="px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700  transition-colors duration-200 text-sm font-medium cursor-pointer">
+            <button onClick={() => setIsEditOpen(true)} className="px-3 py-2 rounded-md bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] transition-colors duration-200 text-sm font-medium cursor-pointer">
               Управление расписанием
             </button>
           )}
-          <button onClick={() => setCreateScheduleModalOpen(true)} className="px-3 py-2 rounded-lg bg-green-600 hover:bg-green-700  transition-colors duration-200 text-sm font-medium cursor-pointer">
+          <button onClick={() => setCreateScheduleModalOpen(true)} className="px-3 py-2 rounded-md bg-[var(--safe)] hover:bg-[var(--safe-strong)] text-[#0A0F16] transition-colors duration-200 text-sm font-medium cursor-pointer">
             Создать
           </button>
         </div>
