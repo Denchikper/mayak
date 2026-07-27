@@ -87,11 +87,12 @@ export default function AlarmControlPanel({ token, logout, navigate, setActiveAl
   return (
     <>
       <div
-        className="min-w-40 bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 shadow-lg
+        className="min-w-40 bg-[var(--surface)] border border-[var(--border)] rounded-lg p-6 shadow-lg
                    transition-all duration-300 flex flex-col"
         style={{ height: alarms.length <= 8 ? `${160 + Math.ceil(alarms.length / 2) * 70}px` : "480px" }}
       >
-        <h3 className="text-lg font-semibold mb-5 text-[var(--text)] text-center">
+        <h3 className="font-display uppercase tracking-wide text-lg font-semibold mb-5 text-[var(--text)] text-center flex items-center justify-center gap-3">
+          <span className="beacon-pulse beacon-pulse--idle inline-block w-2.5 h-2.5 rounded-full" style={{ background: "var(--pulse-color)" }} />
           Управление тревогами
         </h3>
 
@@ -120,10 +121,10 @@ export default function AlarmControlPanel({ token, logout, navigate, setActiveAl
         <div className="mt-6 flex justify-center">
           <button
             onClick={handleDeactivateAllClick}
-            className="px-5 py-2 bg-linear-to-r from-blue-600 to-blue-500 
-                       hover:from-blue-700 hover:to-blue-600 rounded-lg text-white 
-                       font-semibold text-sm transition-all duration-300 
-                       hover:scale-105 shadow-[0_0_10px_rgba(50,100,255,0.4)]"
+            className="px-5 py-2 bg-[var(--safe)]
+                       hover:bg-[var(--safe-strong)] rounded-md text-[#0A0F16]
+                       font-semibold text-sm transition-all duration-300
+                       hover:scale-105"
           >
             Отключить все тревоги
           </button>
