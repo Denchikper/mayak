@@ -12,7 +12,7 @@ export default function Login() {
   const { login } = useAuth();
 
   useEffect(() => {
-    document.title = "Вход в систему | СУЗО";
+    document.title = "Вход в систему | Маяк";
   }, []);
 
   const handleChange = (e) => {
@@ -41,72 +41,88 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[var(--bg)] text-[var(--text)] relative">
-      <header className="flex items-center justify-start px-6 py-2 border-b border-[var(--border)] select-none">
-        <img
-          src="/icon.png"
-          alt="logo"
-          className="w-10 h-10 mr-3 pointer-events-none select-none"
+    <div className="flex flex-col lg:flex-row h-screen bg-[var(--bg)] text-[var(--text)]">
+      {/* Брендовая панель */}
+      <div className="relative flex flex-col justify-center items-start px-8 py-8 lg:py-0 lg:w-1/2 overflow-hidden border-b lg:border-b-0 lg:border-r border-[var(--border)]">
+        <div
+          aria-hidden="true"
+          className="absolute -top-24 -left-24 w-96 h-96 rounded-full opacity-25 blur-3xl pointer-events-none"
+          style={{ background: "radial-gradient(circle, var(--beacon), transparent 70%)" }}
         />
-        <div className="w-px h-8 bg-[var(--surface-2)] mx-3"></div>
-        <h1 className="text-[15px] font-semibold text-[var(--text)]">
-          Маяк
-        </h1>
-      </header>
+        <div className="relative flex items-center gap-3 mb-4 lg:mb-8">
+          <span className="beacon-pulse beacon-pulse--idle">
+            <img
+              src="/icon.png"
+              alt="Маяк"
+              className="relative w-12 h-12 pointer-events-none select-none"
+              draggable={false}
+            />
+          </span>
+          <h1 className="font-display text-3xl lg:text-4xl font-bold tracking-wide uppercase text-[var(--text)]">
+            Маяк
+          </h1>
+        </div>
+        <p className="relative max-w-sm text-[var(--text-soft)] text-sm lg:text-base">
+          Система управления звуковыми оповещениями. Панель дежурного диспетчера.
+        </p>
+      </div>
 
-      <main className="flex flex-1 justify-center items-center px-4">
-        <div className="bg-[var(--surface)] p-6 sm:p-8 rounded-2xl shadow-lg w-full max-w-sm">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Вход</h2>
+      {/* Форма входа */}
+      <main className="flex flex-1 justify-center items-center px-4 py-10">
+        <div className="w-full max-w-sm">
+          <h2 className="font-display text-2xl font-semibold mb-6 text-center uppercase tracking-wide">
+            Вход
+          </h2>
 
           <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
             <div>
-              <label className="block mb-1 text-sm">Логин</label>
+              <label className="block mb-1 text-sm text-[var(--text-soft)]">Логин</label>
               <input
                 type="text"
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="w-full px-3 py-2 rounded-md bg-[var(--input)] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 rounded-md bg-[var(--input)] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--beacon)]"
                 placeholder="Введите логин"
                 required
               />
             </div>
 
             <div>
-              <label className="block mb-1 text-sm">Пароль</label>
+              <label className="block mb-1 text-sm text-[var(--text-soft)]">Пароль</label>
               <input
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-3 py-2 rounded-md bg-[var(--input)] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 rounded-md bg-[var(--input)] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--beacon)]"
                 placeholder="Введите пароль"
                 required
               />
             </div>
 
             {error && (
-              <p className="text-red-400 text-sm text-center">{error}</p>
+              <p className="text-[var(--alarm)] text-sm text-center">{error}</p>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className={`mt-4 py-2 rounded-md text-white font-medium transition ${
+              className={`mt-4 py-2 rounded-md font-medium transition ${
                 loading
-                  ? "bg-[var(--surface-3)] cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
+                  ? "bg-[var(--surface-3)] text-[var(--text-muted)] cursor-not-allowed"
+                  : "bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16]"
               }`}
             >
               {loading ? "Вход..." : "Войти"}
             </button>
           </form>
+
+          <p className="mt-8 text-center text-xs font-mono text-[var(--text-muted)]">
+            Версия 1.0.0
+          </p>
         </div>
       </main>
-
-      <footer className="absolute bottom-2 right-4 text-sm text-[var(--text-muted)]">
-        Версия 1.0.0
-      </footer>
     </div>
   );
 }
