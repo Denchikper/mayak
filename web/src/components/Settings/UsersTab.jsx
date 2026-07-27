@@ -6,7 +6,7 @@ import BigSelect from "../ui/BigSelect";
 import { useAuth } from "../../context/AuthContext";
 
 const fieldClass =
-  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition";
+  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--beacon)] focus:border-[var(--beacon)] transition";
 const labelClass = "block text-xs text-[var(--text-muted)] mb-1.5";
 
 const emptyForm = { username: "", password: "", last_name: "", first_name: "", second_name: "", role: "" };
@@ -70,7 +70,7 @@ export default function UsersTab({ token, logout, navigate }) {
         {!formOpen && (
           <button
             onClick={() => { setForm(emptyForm); setFormOpen(true); }}
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] text-sm font-medium cursor-pointer transition-colors"
           >
             <Plus size={18} /> Добавить
           </button>
@@ -78,7 +78,7 @@ export default function UsersTab({ token, logout, navigate }) {
       </div>
 
       {formOpen && (
-        <form onSubmit={handleCreate} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-4 sm:p-5 shadow-sm animate-modalEnter">
+        <form onSubmit={handleCreate} className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 sm:p-5 shadow-sm animate-modalEnter">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium">Новый пользователь</h3>
             <button type="button" onClick={() => setFormOpen(false)} className="p-1.5 rounded-lg hover:bg-[var(--surface-2)] text-[var(--text-muted)] cursor-pointer"><X size={18} /></button>
@@ -91,22 +91,22 @@ export default function UsersTab({ token, logout, navigate }) {
             <div><label className={labelClass}>Отчество</label><input className={fieldClass} value={form.second_name} onChange={(e) => setForm({ ...form, second_name: e.target.value })} /></div>
             <div><label className={labelClass}>Роль</label><BigSelect value={form.role} onChange={(v) => setForm({ ...form, role: v })} options={roleOptions} placeholder="Выберите роль" /></div>
           </div>
-          {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
+          {error && <p className="text-[var(--alarm)] text-sm mt-3">{error}</p>}
           <div className="flex gap-3 mt-4">
-            <button type="submit" className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer">Создать</button>
+            <button type="submit" className="px-4 py-2 rounded-lg bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] text-sm font-medium cursor-pointer">Создать</button>
             <button type="button" onClick={() => setFormOpen(false)} className="px-4 py-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-sm cursor-pointer">Отмена</button>
           </div>
         </form>
       )}
 
-      {error && !formOpen && <p className="text-red-400 text-sm">{error}</p>}
+      {error && !formOpen && <p className="text-[var(--alarm)] text-sm">{error}</p>}
 
       <div className="space-y-2">
         {users.length === 0 ? (
           <p className="text-[var(--text-muted)] text-center py-6">Нет пользователей</p>
         ) : (
           users.map((u) => (
-            <div key={u.id} className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div key={u.id} className="bg-[var(--surface)] border border-[var(--border)] rounded-md p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="min-w-0">
                 <div className="font-medium text-[var(--text)] truncate">{fullName(u)}</div>
                 <div className="text-sm text-[var(--text-muted)]">@{u.username}</div>
@@ -116,7 +116,7 @@ export default function UsersTab({ token, logout, navigate }) {
                   <BigSelect value={u.role} onChange={(v) => handleRoleChange(u.id, v)} options={roleOptions} />
                 </div>
                 {String(me?.userId) !== String(u.id) && (
-                  <button onClick={() => handleDelete(u.id)} title="Удалить" className="p-2 rounded-lg bg-red-600/15 text-red-400 hover:bg-red-600/25 cursor-pointer transition-colors">
+                  <button onClick={() => handleDelete(u.id)} title="Удалить" className="p-2 rounded-lg bg-[var(--alarm)]/15 text-[var(--alarm)] hover:bg-[var(--alarm)]/25 cursor-pointer transition-colors">
                     <Trash2 size={16} />
                   </button>
                 )}

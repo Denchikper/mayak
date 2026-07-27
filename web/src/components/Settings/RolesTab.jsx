@@ -5,7 +5,7 @@ import { getPermissionCatalog } from "../../api/permissions/permissions";
 import { useAuth } from "../../context/AuthContext";
 
 const fieldClass =
-  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition";
+  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--beacon)] focus:border-[var(--beacon)] transition";
 
 export default function RolesTab({ token, logout, navigate }) {
   const { refreshPermissions } = useAuth();
@@ -78,17 +78,17 @@ export default function RolesTab({ token, logout, navigate }) {
       <div className="flex items-center justify-between">
         <h2 className="text-base font-semibold">Роли и доступы</h2>
         {!editing && (
-          <button onClick={startCreate} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors">
+          <button onClick={startCreate} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] text-sm font-medium cursor-pointer transition-colors">
             <Plus size={18} /> Новая роль
           </button>
         )}
       </div>
 
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {error && <p className="text-[var(--alarm)] text-sm">{error}</p>}
 
       {/* Редактор */}
       {editing && (
-        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-4 sm:p-5 shadow-sm animate-modalEnter">
+        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 sm:p-5 shadow-sm animate-modalEnter">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium">{editing.id ? "Редактирование роли" : "Новая роль"}</h3>
             <button onClick={() => setEditing(null)} className="p-1.5 rounded-lg hover:bg-[var(--surface-2)] text-[var(--text-muted)] cursor-pointer"><X size={18} /></button>
@@ -103,7 +103,7 @@ export default function RolesTab({ token, logout, navigate }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {items.map((item) => (
                   <label key={item.key} className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-[var(--surface-2)] cursor-pointer hover:bg-[var(--surface-3)] transition-colors">
-                    <input type="checkbox" className="accent-blue-600 w-4 h-4" checked={editing.permissions.includes(item.key)} onChange={() => togglePerm(item.key)} />
+                    <input type="checkbox" className="accent-[var(--beacon)] w-4 h-4" checked={editing.permissions.includes(item.key)} onChange={() => togglePerm(item.key)} />
                     <span className="text-sm text-[var(--text)]">{item.label}</span>
                   </label>
                 ))}
@@ -112,7 +112,7 @@ export default function RolesTab({ token, logout, navigate }) {
           ))}
 
           <div className="flex gap-3 mt-2">
-            <button onClick={handleSave} className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer">Сохранить</button>
+            <button onClick={handleSave} className="px-4 py-2 rounded-lg bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] text-sm font-medium cursor-pointer">Сохранить</button>
             <button onClick={() => setEditing(null)} className="px-4 py-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-sm cursor-pointer">Отмена</button>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function RolesTab({ token, logout, navigate }) {
       {/* Список ролей */}
       <div className="space-y-2">
         {roles.map((role) => (
-          <div key={role.id} className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-3 flex items-center justify-between gap-3">
+          <div key={role.id} className="bg-[var(--surface)] border border-[var(--border)] rounded-md p-3 flex items-center justify-between gap-3">
             <div className="min-w-0">
               <div className="font-medium text-[var(--text)] flex items-center gap-2">
                 {role.name}
@@ -134,7 +134,7 @@ export default function RolesTab({ token, logout, navigate }) {
             {!role.is_system && (
               <div className="flex items-center gap-2 shrink-0">
                 <button onClick={() => startEdit(role)} title="Редактировать" className="p-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-[var(--text-soft)] cursor-pointer transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => handleDelete(role)} title="Удалить" className="p-2 rounded-lg bg-red-600/15 text-red-400 hover:bg-red-600/25 cursor-pointer transition-colors"><Trash2 size={16} /></button>
+                <button onClick={() => handleDelete(role)} title="Удалить" className="p-2 rounded-lg bg-[var(--alarm)]/15 text-[var(--alarm)] hover:bg-[var(--alarm)]/25 cursor-pointer transition-colors"><Trash2 size={16} /></button>
               </div>
             )}
           </div>
