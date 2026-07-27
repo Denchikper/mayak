@@ -1,4 +1,5 @@
   import React, { useState, useEffect } from "react";
+  import { RadioTower } from "lucide-react";
   import { getServerStatus } from "../api/server/getServerStatus";
   import ClockBar from "./ClockBar";
 
@@ -28,9 +29,15 @@
         : "beacon-pulse--idle";
 
     return (
-      <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-lg shadow-lg w-full max-w-sm text-[var(--text)] max-h-110">
-        <h2 className="font-display text-lg font-semibold text-center uppercase tracking-wide flex items-center justify-center gap-3">
-          <span className={`beacon-pulse ${pulseClass} inline-block w-2.5 h-2.5 rounded-full`} style={{ background: "var(--pulse-color)" }} />
+      <div className="bg-[var(--surface)] border border-[var(--border)] p-8 rounded-lg shadow-lg w-full text-[var(--text)] flex flex-col items-center">
+        <span
+          className={`beacon-pulse ${pulseClass} flex items-center justify-center w-16 h-16 rounded-full mb-5`}
+          style={{ background: "var(--pulse-color)" }}
+        >
+          <RadioTower size={28} className="text-[#0A0F16]" />
+        </span>
+
+        <h2 className="font-display text-lg font-semibold text-center uppercase tracking-wide">
           Состояние системы
         </h2>
 
@@ -40,14 +47,14 @@
           {serverConnected ? "Сервер подключен" : "Сервер недоступен"}
         </p>
 
-        <div className="border-t border-[var(--border)] pt-3 mb-5">
+        <div className="border-t border-[var(--border)] pt-3 mb-5 w-full">
           <ClockBar
               token={token}
               logout={logout}
               navigate={navigate}/>
         </div>
 
-        <div className="border-t border-[var(--border)] pt-3 mb-5">
+        <div className="border-t border-[var(--border)] pt-3 mb-5 w-full">
           <p className="text-center text-[var(--text-muted)] uppercase tracking-wide text-xs font-mono">Активная тревога</p>
           <p
             className={`text-center mt-2 font-bold text-l py-2 rounded-md ${
@@ -60,7 +67,7 @@
           </p>
         </div>
 
-      <div className="border-t border-[var(--border)] pt-3 mb-4">
+      <div className="border-t border-[var(--border)] pt-3 mb-4 w-full">
     <p className="text-center text-[var(--text-muted)] uppercase tracking-wide mb-2 text-xs font-mono">Устройства</p>
     {Array.isArray(devicesList) && devicesList.length > 0 ? (
       devicesList.map((device, i) => (

@@ -1,6 +1,6 @@
 // src/pages/DevicesPage.jsx
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 import DeviceItem from "../components/Devices/DeviceItem";
 import CreateDeviceModal from "../components/Devices/CreateDeviceModal";
 import ConfirmDeleteModal from "../components/Devices/ConfirmDeleteModal";
@@ -110,9 +110,9 @@ export default function DevicesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-        <Navbar />
-        <div className="max-w-5xl mx-auto mt-8 px-4 sm:px-6">
+      <div className="flex flex-col lg:flex-row min-h-screen bg-[var(--bg)] text-[var(--text)]">
+        <Sidebar />
+        <div className="flex-1 min-w-0 max-w-5xl mx-auto mt-8 px-4 sm:px-6">
           <p className="text-center py-8">Загрузка устройств...</p>
         </div>
       </div>
@@ -120,10 +120,10 @@ export default function DevicesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] ">
-      <Navbar />
+    <div className="flex flex-col lg:flex-row min-h-screen bg-[var(--bg)] text-[var(--text)]">
+      <Sidebar />
 
-      <div className="max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
+      <div className="flex-1 min-w-0 overflow-y-auto max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
           <h1 className="font-display uppercase tracking-wide text-lg sm:text-xl font-semibold">Список устройств</h1>
           <div className="flex items-center gap-3">

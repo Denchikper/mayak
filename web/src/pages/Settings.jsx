@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar.jsx";
+import Sidebar from "../components/Sidebar.jsx";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { User, KeyRound, Palette, Users, Shield, ScrollText } from "lucide-react";
@@ -31,9 +31,9 @@ export default function SettingsPage() {
   const active = tabs.find((t) => t.id === tab) ? tab : "profile";
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-      <Navbar />
-      <div className="max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-[var(--bg)] text-[var(--text)]">
+      <Sidebar />
+      <div className="flex-1 min-w-0 overflow-y-auto max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
         <h1 className="font-display uppercase tracking-wide text-lg sm:text-xl font-semibold mb-5">Настройки</h1>
 
         {/* Вкладки */}

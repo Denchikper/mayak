@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar.jsx";
+import Sidebar from "../components/Sidebar.jsx";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import SchoolTab from "../components/Alerts/SchoolTab.jsx";
@@ -17,9 +17,9 @@ export default function PlannedAlertsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col select-none">
-      <Navbar />
-      <div className="flex-1 flex flex-col items-center p-4 sm:p-6">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col lg:flex-row select-none">
+      <Sidebar />
+      <div className="flex-1 min-w-0 overflow-y-auto flex flex-col items-center p-4 sm:p-6">
 
         {/* Переключатель по центру */}
         <div className="mb-8">

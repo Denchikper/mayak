@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { LogOut } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx"; // если используешь AuthContext
 
-export default function ProfileMenu() {
+export default function ProfileMenu({ placement = "down" }) {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth(); // предполагаем, что в контексте есть user и logout
   const menuRef = useRef(null);
@@ -19,6 +19,7 @@ export default function ProfileMenu() {
   }, []);
 
   const initial = (user?.firstName || user?.username || "?").charAt(0).toUpperCase();
+  const isUp = placement === "up";
 
   return (
     <div className="relative" ref={menuRef}>
@@ -41,10 +42,10 @@ export default function ProfileMenu() {
       {/* Попап меню */}
       {open && (
         <div
-          className="absolute right-0 mt-3 w-64 origin-top-right
+          className={`absolute left-0 w-64 ${isUp ? "bottom-full mb-3 origin-bottom-left" : "top-full mt-3 origin-top-left"}
                      bg-[var(--surface)] border border-[var(--border)] rounded-lg
                      shadow-[0_16px_40px_-8px_rgba(0,0,0,0.45)]
-                     text-[var(--text)] z-50 overflow-hidden animate-fadeIn"
+                     text-[var(--text)] z-50 overflow-hidden animate-fadeIn`}
         >
           <div className="p-4 text-center">
             <p className="font-semibold">{user?.firstName} {user?.secondName} {user?.lastName}</p>

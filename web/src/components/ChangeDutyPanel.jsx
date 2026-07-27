@@ -27,9 +27,6 @@ export default function ChangeDutyPanel({ token, logout, navigate }) {
       <div
         className="
           w-full
-          max-w-sm
-          sm:max-w-md
-          lg:max-w-sm
           bg-[var(--surface)]
           border border-[var(--border)]
           rounded-lg
