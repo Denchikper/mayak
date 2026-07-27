@@ -30,7 +30,7 @@ docker compose up --build
 ```
 
 - Frontend: `http://localhost:3000`
-- Backend API и WebSocket: `http://localhost:2255`
+- Backend API и WebSocket: `http://localhost:8080`
 - Первый вход: **`admin` / `admin`** (создаётся сидом на пустой БД — смените пароль сразу после входа)
 
 Подробности по конфигурации, деплою на прод (host network, GHCR-образы, релизы по тегу)

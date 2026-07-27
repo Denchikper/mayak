@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
-const API_TARGET = process.env.API_TARGET || 'http://server:2255';
+const API_TARGET = process.env.API_TARGET || 'http://server:8080';
 const DIST_DIR = path.join(__dirname, 'dist');
 
 const MIME_TYPES = {

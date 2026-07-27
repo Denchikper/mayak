@@ -15,7 +15,7 @@ services:
       timeout: 5s
       retries: 10
     ports:
-      - "${DATABASE_PORT:-5432}:5432"
+      - "127.0.0.1:${DATABASE_PORT:-5432}:5432"
 
   server:
     image: ghcr.io/denchikper/mayak-server:latest
@@ -28,7 +28,7 @@ services:
     environment:
       NODE_ENV: production
       SERVER_IP: 0.0.0.0
-      SERVER_PORT: ${SERVER_PORT:-2255}
+      SERVER_PORT: ${SERVER_PORT:-8080}
       DATABASE_HOST: ${DATABASE_HOST:-127.0.0.1}
       DATABASE_PORT: ${DATABASE_PORT:-5432}
       DATABASE_NAME: ${DATABASE_NAME:-mayak}
@@ -50,7 +50,7 @@ services:
       - "host.docker.internal:host-gateway"
     environment:
       PORT: 3000
-      API_TARGET: http://host.docker.internal:${SERVER_PORT:-2255}
+      API_TARGET: http://host.docker.internal:${SERVER_PORT:-8080}
     ports:
       - "${WEB_PORT:-3000}:3000"
 

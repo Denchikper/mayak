@@ -4,3 +4,6 @@ node_modules
 .env
 .env.local
 .env.*.local
+
+# Arduino: секреты устройств (сеть, auth_token) — коммитится только secrets.example.h
+devices/**/secrets.h

@@ -29,7 +29,7 @@ services:
     environment:
       NODE_ENV: production
       SERVER_IP: 0.0.0.0
-      SERVER_PORT: 2255
+      SERVER_PORT: 8080
       DATABASE_HOST: ${DATABASE_HOST:-db}
       DATABASE_PORT: ${DATABASE_PORT:-5432}
       DATABASE_NAME: ${DATABASE_NAME:-mayak}
@@ -41,7 +41,7 @@ services:
       RELAY_DEVICE_ID: ${RELAY_DEVICE_ID:-a41942b7-4f77-4b13-90d5-da88294125f1}
       RING_CHANNEL_ID: ${RING_CHANNEL_ID:-6}
     ports:
-      - "${SERVER_PORT:-2255}:2255"
+      - "${SERVER_PORT:-8080}:8080"
 
   web:
     build:
@@ -55,7 +55,7 @@ services:
       - server
     environment:
       PORT: 3000
-      API_TARGET: http://server:2255
+      API_TARGET: http://server:8080
     ports:
       - "${WEB_PORT:-3000}:3000"
 

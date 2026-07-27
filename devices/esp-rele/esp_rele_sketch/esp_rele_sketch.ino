@@ -1,6 +1,7 @@
 #include <ETH.h>
 #include "wsHandler.h"
 #include "alarmManager.h"
+#include "secrets.h"
 
 #define DEV_PIN 1 
 
@@ -9,18 +10,18 @@ const char* ETH_HOSTNAME = "System-control-alerts-relay_device";
 
 
 // Dev сеть
-IPAddress dev_IP(192,168,1,121);
-IPAddress dev_gateway(192,168,1,1);
-IPAddress dev_subnet(255,255,255,0);
-IPAddress dev_dns(192,168,1,1);
-const char* dev_ws = "ws://192.168.1.99:2255";
+IPAddress dev_IP(DEV_IP);
+IPAddress dev_gateway(DEV_GATEWAY);
+IPAddress dev_subnet(DEV_SUBNET);
+IPAddress dev_dns(DEV_DNS);
+const char* dev_ws = DEV_WS_URL;
 
 // Prod сеть
-IPAddress prod_IP(172,16,7,102);
-IPAddress prod_gateway(172,16,4,2);
-IPAddress prod_subnet(255,255,248,0);
-IPAddress prod_dns(172,16,4,2);
-const char* prod_ws = "ws://172.16.4.21:2255";
+IPAddress prod_IP(PROD_IP);
+IPAddress prod_gateway(PROD_GATEWAY);
+IPAddress prod_subnet(PROD_SUBNET);
+IPAddress prod_dns(PROD_DNS);
+const char* prod_ws = PROD_WS_URL;
 
 void setup() {
   delay(1000);
@@ -42,7 +43,7 @@ void setup() {
   setupAlarm();
 
   if (isDev) {
-    // connectToServer("ws://192.168.1.99:2255");
+    // connectToServer("ws://192.168.1.99:8080");
     connectToServer(dev_ws);
   } else {
     connectToServer(prod_ws);
