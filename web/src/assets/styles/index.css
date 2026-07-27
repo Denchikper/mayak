@@ -28,26 +28,26 @@
 }
 
 :root[data-theme="light"] {
-  --bg: #EAF2F8;
-  --surface: #ffffff;
-  --surface-2: #DCEAF3;
-  --surface-3: #C9DEEC;
+  --bg: #F3ECDC;
+  --surface: #FFFFFF;
+  --surface-2: #EAE0C7;
+  --surface-3: #DECBA3;
   --input: #ffffff;
-  --border: #B9D0E0;
-  --text: #0B1F2E;
-  --text-soft: #2D4A5C;
-  --text-muted: #5E7A8C;
+  --border: #D2BD8E;
+  --text: #16222B;
+  --text-soft: #3A4D5C;
+  --text-muted: #6C7C88;
 
-  --beacon: #E08A2B;
-  --beacon-strong: #C67418;
-  --alarm: #D93D2B;
-  --alarm-strong: #B92E1E;
-  --safe: #159873;
-  --safe-strong: #0E7D5F;
+  --beacon: #C4740A;
+  --beacon-strong: #A25F07;
+  --alarm: #AE1F1F;
+  --alarm-strong: #8E1717;
+  --safe: #0E7A5C;
+  --safe-strong: #0B6249;
 
-  --scrollbar-track: #DCEAF3;
-  --scrollbar-thumb: #B9D0E0;
-  --scrollbar-thumb-hover: #9CBBD1;
+  --scrollbar-track: #EAE0C7;
+  --scrollbar-thumb: #D2BD8E;
+  --scrollbar-thumb-hover: #BFA875;
 
   color-scheme: light;
 }
