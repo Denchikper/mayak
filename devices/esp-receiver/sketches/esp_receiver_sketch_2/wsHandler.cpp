@@ -1,12 +1,13 @@
 #include "wsHandler.h"
+#include "secrets.h"
 #include <ArduinoJson.h>
 #include <ArduinoWebsockets.h>
 
 WebsocketsClient client;
 
 const char* NameDevice = "WT32-ETH01_Receiver_Device_2";
-// Секрет устройства (auth_token из карточки устройства в веб-панели)
-const char* DeviceToken = "PASTE_DEVICE_AUTH_TOKEN_HERE";
+// Секрет устройства (auth_token из карточки устройства в веб-панели) — см. secrets.h
+const char* DeviceToken = DEVICE_AUTH_TOKEN;
 
 unsigned long lastPing = 0;
 unsigned long lastReconnectAttempt = 0;
