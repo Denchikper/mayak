@@ -1,45 +1,73 @@
 @import "tailwindcss";
 
-/* ===== Цветовые токены темы ===== */
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Big Shoulders Display", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* ===== Цветовые токены темы «Маяк»: тёмное ночное море + янтарный луч ===== */
 :root,
 :root[data-theme="dark"] {
-  --bg: #0E1117;
-  --surface: #151A22;
-  --surface-2: #161B22;
-  --surface-3: #2b2f3a;
-  --input: #11141A;
-  --border: #374151;
-  --text: #f3f4f6;
-  --text-soft: #d1d5db;
-  --text-muted: #9ca3af;
+  --bg: #0A0F16;
+  --surface: #121A26;
+  --surface-2: #182231;
+  --border: #24303E;
+  --input: #0D131C;
 
-  --scrollbar-track: #151a22;
-  --scrollbar-thumb: #2b2f3a;
-  --scrollbar-thumb-hover: #3a3f4d;
+  --text: #EAF1F5;
+  --text-soft: #B7C2CC;
+  --text-muted: #79868F;
 
+  --accent: #FFB454;
+  --accent-strong: #FFA53D;
+  --accent-contrast: #14100A;
+
+  --alarm: #FF6357;
+  --alarm-strong: #FF4433;
+  --safe: #3ED8A3;
+  --safe-strong: #22B686;
+
+  --scrollbar-thumb: #24303E;
+  --scrollbar-thumb-hover: #2E3C4C;
+
+  --focus-ring: var(--accent);
   color-scheme: dark;
 }
 
 :root[data-theme="light"] {
-  --bg: #f1f3f6;
-  --surface: #ffffff;
-  --surface-2: #f3f5f8;
-  --surface-3: #e3e7ec;
-  --input: #ffffff;
-  --border: #d3d8e0;
-  --text: #111827;
-  --text-soft: #374151;
-  --text-muted: #6b7280;
+  --bg: #F7F8FA;
+  --surface: #FFFFFF;
+  --surface-2: #F0F2F5;
+  --border: #E2E5EA;
+  --input: #FFFFFF;
 
-  --scrollbar-track: #e3e7ec;
-  --scrollbar-thumb: #c2c8d2;
-  --scrollbar-thumb-hover: #aab2bf;
+  --text: #12181F;
+  --text-soft: #4B5761;
+  --text-muted: #7C8994;
 
+  --accent: #B36A00;
+  --accent-strong: #935800;
+  --accent-contrast: #FFFFFF;
+
+  --alarm: #C4291B;
+  --alarm-strong: #A31F13;
+  --safe: #157A56;
+  --safe-strong: #0F6345;
+
+  --scrollbar-thumb: #D8DCE2;
+  --scrollbar-thumb-hover: #C4CAD2;
+
+  --focus-ring: var(--accent);
   color-scheme: light;
 }
 
+* {
+  border-color: var(--border);
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.5;
   font-weight: 400;
   width: 100%;
@@ -54,15 +82,8 @@
 body {
   background-color: var(--bg);
   color: var(--text);
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-/* Кнопки со сплошным акцентным фоном всегда со светлым текстом (в обеих темах) */
-button.bg-blue-600, button.bg-blue-700,
-button.bg-green-600, button.bg-green-700,
-button.bg-red-600, button.bg-red-700,
-button.bg-yellow-600, button.bg-yellow-700 {
-  color: #fff;
+  min-height: 100%;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 img {
@@ -72,32 +93,69 @@ img {
   -o-user-drag: none;
 }
 
-@keyframes modalEnter {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* Единый видимый focus-ring для доступности с клавиатуры */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
-.animate-modalEnter {
-  animation: modalEnter 0.25s ease-out forwards;
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.4s ease-out;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes modalEnter {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-modalEnter {
+  animation: modalEnter 0.15s ease-out;
+}
+
+/* ===== «Луч маяка» — единственный сигнатурный элемент, только для live-статуса ===== */
+@keyframes beaconPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.beacon-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--pulse-color, var(--accent));
+  flex-shrink: 0;
+}
+
+.beacon-dot--live::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--pulse-color, var(--accent));
+  animation: beaconPulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beacon-dot--live::after {
+    animation: none;
+  }
 }
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -110,41 +168,5 @@ img {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-}
-
-.custom-scrollbar-2::-webkit-scrollbar {
-  width: 4px;
-}
-
-.custom-scrollbar-2::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb);
-  border-radius: 4px;
-}
-
-.custom-scrollbar-2::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-thumb-hover);
-  
-}
-
-.custom-scrollbar-2::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-}
-
-.custom-scrollbar-3::-webkit-scrollbar {
-  height: 6px;
-}
-
-.custom-scrollbar-3::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb);
-  border-radius: 4px;
-}
-
-.custom-scrollbar-3::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-thumb-hover);
-  
-}
-
-.custom-scrollbar-3::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
+  background: transparent;
 }

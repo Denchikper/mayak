@@ -34,13 +34,13 @@ export default function ClockBar({ token, logout, navigate }) {
   // Функция для расчета серверного времени на основе последней синхронизации
   const getCalculatedServerTime = () => {
     if (!serverTimeRef.current || !lastSyncRef.current) return null;
-    
+
     const now = Date.now();
     const elapsed = now - lastSyncRef.current; // прошло миллисекунд с синхронизации
-    
+
     // Вычисляем новую дату серверного времени
     const calculatedDate = new Date(serverTimeRef.current.getTime() + elapsed);
-    
+
     return {
       hours: calculatedDate.getHours(),
       minutes: calculatedDate.getMinutes(),
@@ -53,7 +53,7 @@ export default function ClockBar({ token, logout, navigate }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setLocalTime(getLocalTime());
-      
+
       // Обновляем серверное время расчетным путем
       const calculatedTime = getCalculatedServerTime();
       if (calculatedTime) {
@@ -76,12 +76,12 @@ export default function ClockBar({ token, logout, navigate }) {
     const fetchServerTime = async () => {
       try {
         const timeData = await getServerTime(token, logout, navigate);
-        
+
         // Сохраняем объект Date для расчетов
         const serverDate = timeData.date;
         serverTimeRef.current = serverDate;
         lastSyncRef.current = Date.now();
-        
+
         // Сохраняем в state для отображения
         setServerTime({
           hours: timeData.hours,
@@ -89,11 +89,11 @@ export default function ClockBar({ token, logout, navigate }) {
           seconds: timeData.seconds,
           date: serverDate
         });
-        
+
         // Вычисляем разницу между серверным и локальным временем
         const localDate = new Date();
         serverOffsetRef.current = serverDate.getTime() - localDate.getTime();
-        
+
       } catch (error) {
         console.error("Ошибка получения серверного времени:", error);
         // В случае ошибки используем локальное время
@@ -112,7 +112,7 @@ export default function ClockBar({ token, logout, navigate }) {
 
     setLocalTime(getLocalTime());
     fetchServerTime(); // сразу при загрузке
-    
+
     // Синхронизация каждые 60 секунд (вместо 10)
     const interval = setInterval(fetchServerTime, 60000);
     return () => clearInterval(interval);
@@ -121,9 +121,15 @@ export default function ClockBar({ token, logout, navigate }) {
   if (!token) return;
 
   return (
-    <div className="flex space-x-6 text-[var(--text)] text-center">
-      <div>Локальное время: {`${formatTime(localTime.hours)}:${formatTime(localTime.minutes)}:${formatTime(localTime.seconds)}`}</div>
-      <div>Серверное время: {`${formatTime(serverTime.hours)}:${formatTime(serverTime.minutes)}:${formatTime(serverTime.seconds)}`}</div>
+    <div className="flex justify-between gap-4 font-mono text-sm">
+      <div className="flex flex-col">
+        <span className="text-[var(--text-muted)] text-xs uppercase tracking-wide">Локальное</span>
+        <span className="text-[var(--text)]">{`${formatTime(localTime.hours)}:${formatTime(localTime.minutes)}:${formatTime(localTime.seconds)}`}</span>
+      </div>
+      <div className="flex flex-col text-right">
+        <span className="text-[var(--text-muted)] text-xs uppercase tracking-wide">Сервер</span>
+        <span className="text-[var(--text)]">{`${formatTime(serverTime.hours)}:${formatTime(serverTime.minutes)}:${formatTime(serverTime.seconds)}`}</span>
+      </div>
     </div>
   );
 }

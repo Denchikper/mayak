@@ -1,33 +1,31 @@
 import React, { useEffect, useState } from "react";
 import ConfirmActivateModal from "./ConfirmActivateModal";
-import ErrorModal from "./ErrorModal"; 
-import { activateAlarm, deactivateAlarm } from "../api/alarms/alarms";
-import { getAlarms } from "../api/alarms/alarms";
+import ErrorModal from "./ErrorModal";
+import { activateAlarm, deactivateAlarm, getAlarms } from "../api/alarms/alarms";
+import Button from "./ui/Button";
 
 export default function AlarmControlPanel({ token, logout, navigate, setActiveAlarm }) {
+  const [alarms, setAlarms] = useState([]);
+  const [confirmModal, setConfirmModal] = useState({ open: false, alarm: null });
+  const [errorModal, setErrorModal] = useState({ open: false, message: "" });
 
-  useEffect (() => {
+  useEffect(() => {
     const loadAlarms = async () => {
-        try {
-            const data = await getAlarms(token, logout);
-            if(data.ok) {
-                setAlarms(data.data || []);
-            }
-        } catch (err) {
-            console.error("Ошибка при загрузке тревог:", err);
+      try {
+        const data = await getAlarms(token, logout);
+        if (data.ok) {
+          setAlarms(data.data || []);
         }
-    }
+      } catch (err) {
+        console.error("Ошибка при загрузке тревог:", err);
+      }
+    };
 
     loadAlarms();
     const interval = setInterval(loadAlarms, 5000);
     return () => clearInterval(interval);
   }, [token, logout, navigate]);
 
-
-
-  const [alarms, setAlarms] = useState([]);  
-  const [confirmModal, setConfirmModal] = useState({ open: false, alarm: null });
-  const [errorModal, setErrorModal] = useState({ open: false, message: "" });
   const alarmList = Array.isArray(alarms) ? alarms : [];
   const openConfirm = (alarm) => setConfirmModal({ open: true, alarm });
   const closeConfirm = () => setConfirmModal({ open: false, alarm: null });
@@ -41,7 +39,7 @@ export default function AlarmControlPanel({ token, logout, navigate, setActiveAl
       if (!res.ok) {
         setErrorModal({ open: true, message: res.data.errorMessage });
       } else {
-        setActiveAlarm(confirmModal.alarm.name)
+        setActiveAlarm(confirmModal.alarm.name);
       }
 
       closeConfirm();
@@ -66,9 +64,9 @@ export default function AlarmControlPanel({ token, logout, navigate, setActiveAl
       if (!res.ok) {
         setErrorModal({ open: true, message: res.data.errorMessage });
       } else {
-        setActiveAlarm("Нет активных тревог")
+        setActiveAlarm("Нет активных тревог");
       }
-      
+
       closeConfirm();
     } catch (err) {
       console.error("Ошибка при деактивации всех тревог:", err);
@@ -86,48 +84,32 @@ export default function AlarmControlPanel({ token, logout, navigate, setActiveAl
 
   return (
     <>
-      <div
-        className="min-w-40 bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 shadow-lg
-                   transition-all duration-300 flex flex-col"
-        style={{ height: alarms.length <= 8 ? `${160 + Math.ceil(alarms.length / 2) * 70}px` : "480px" }}
-      >
-        <h3 className="text-lg font-semibold mb-5 text-[var(--text)] text-center">
+      <div className="w-full max-w-sm bg-[var(--surface)] border border-[var(--border)] rounded-xl p-5 flex flex-col">
+        <h3 className="font-display text-base font-semibold uppercase tracking-wide mb-4">
           Управление тревогами
         </h3>
 
-        {(!alarms || alarms.length === 0) ? (
-          <p className="text-[var(--text-muted)] text-center -mt-2.5">Сервер недоступен или тревоги не найдены</p>
+        {alarmList.length === 0 ? (
+          <p className="text-sm text-[var(--text-muted)] text-center py-6">
+            Сервер недоступен или тревоги не найдены
+          </p>
         ) : (
-<div className="grid grid-cols-2 gap-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
-  {alarmList.length === 0 ? (
-    <p className="text-[var(--text-muted)] text-center mt-20">Сервер недоступен или тревоги не найдены</p>
-  ) : (
-    alarmList.map((alarm) => (
-      <button
-        key={alarm.id}
-        onClick={() => openConfirm(alarm)}
-        className="px-4 py-3 rounded-lg border text-left font-medium 
-                   transition-all duration-300 shadow-md relative text-sm
-                   bg-[var(--surface)] border-[var(--border)] hover:bg-[var(--surface-2)] text-[var(--text)] hover:scale-[1.004]"
-      >
-        {alarm.name}
-      </button>
-    ))
-  )}
-</div>
+          <div className="grid grid-cols-2 gap-2 max-h-72 overflow-y-auto pr-1 custom-scrollbar">
+            {alarmList.map((alarm) => (
+              <button
+                key={alarm.id}
+                onClick={() => openConfirm(alarm)}
+                className="px-3 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--accent)] hover:bg-[var(--surface-2)] text-left text-sm font-medium text-[var(--text)] transition-colors cursor-pointer"
+              >
+                {alarm.name}
+              </button>
+            ))}
+          </div>
         )}
 
-        <div className="mt-6 flex justify-center">
-          <button
-            onClick={handleDeactivateAllClick}
-            className="px-5 py-2 bg-linear-to-r from-blue-600 to-blue-500 
-                       hover:from-blue-700 hover:to-blue-600 rounded-lg text-white 
-                       font-semibold text-sm transition-all duration-300 
-                       hover:scale-105 shadow-[0_0_10px_rgba(50,100,255,0.4)]"
-          >
-            Отключить все тревоги
-          </button>
-        </div>
+        <Button variant="danger" full className="mt-4" onClick={handleDeactivateAllClick}>
+          Отключить все тревоги
+        </Button>
       </div>
 
       <ConfirmActivateModal

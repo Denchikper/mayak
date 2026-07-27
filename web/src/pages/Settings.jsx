@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar.jsx";
+import AppLayout from "../components/AppLayout";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { User, KeyRound, Palette, Users, Shield, ScrollText } from "lucide-react";
@@ -16,7 +16,7 @@ export default function SettingsPage() {
   const [tab, setTab] = useState("profile");
 
   useEffect(() => {
-    document.title = "Настройки | СУЗО";
+    document.title = "Настройки | Маяк";
   }, []);
 
   const tabs = [
@@ -31,33 +31,32 @@ export default function SettingsPage() {
   const active = tabs.find((t) => t.id === tab) ? tab : "profile";
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-      <Navbar />
-      <div className="max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
-        <h1 className="text-xl sm:text-2xl font-semibold mb-5">Настройки</h1>
+    <AppLayout>
+      <div className="max-w-4xl px-4 sm:px-6 lg:px-10 py-6 lg:py-10">
+        <h1 className="font-display text-2xl font-bold uppercase tracking-wide mb-6">Настройки</h1>
 
         {/* Вкладки */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-1.5 mb-6 border-b border-[var(--border)] pb-3">
           {tabs.map((t) => {
             const Icon = t.icon;
             return (
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}
-                className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium cursor-pointer transition-colors ${
+                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium cursor-pointer transition-colors ${
                   active === t.id
-                    ? "bg-blue-600 text-white"
-                    : "bg-[var(--surface-2)] text-[var(--text-soft)] hover:bg-[var(--surface-3)]"
+                    ? "bg-[var(--surface-2)] text-[var(--text)]"
+                    : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-2)]"
                 }`}
               >
-                <Icon size={16} /> {t.label}
+                <Icon size={15} /> {t.label}
               </button>
             );
           })}
         </div>
 
         {/* Контент */}
-        <div className="animate-modalEnter">
+        <div className="animate-fadeIn">
           {active === "profile" && <ProfileTab />}
           {active === "password" && <PasswordTab token={token} logout={logout} navigate={navigate} />}
           {active === "appearance" && <AppearanceTab />}
@@ -72,6 +71,6 @@ export default function SettingsPage() {
           )}
         </div>
       </div>
-    </div>
+    </AppLayout>
   );
 }

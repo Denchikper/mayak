@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { X } from "lucide-react";
+import Modal from "../../ui/Modal";
+import Button from "../../ui/Button";
 
 export default function CreateScheduleModal({ onClose, onCreate }) {
   const [name, setName] = useState("");
@@ -11,47 +12,19 @@ export default function CreateScheduleModal({ onClose, onCreate }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center animate-modalEnter">
-      {/* Overlay */}
-      <div
-        onClick={onClose}
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+    <Modal isOpen title="Создание расписания" onClose={onClose}>
+      <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Введите название расписания"
+        autoFocus
+        className="w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-colors mb-5"
       />
 
-      {/* Modal */}
-      <div className="relative z-10 w-[90vw] max-w-md bg-[var(--bg)] rounded-2xl p-6 flex flex-col gap-5">
-        
-        {/* Header */}
-        <div className="flex items-center justify-center">
-          <h2 className="text-lg font-semibold text-[var(--text)]">
-            Создание расписания
-          </h2>
-        </div>
-
-        {/* Input */}
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Введите название расписания"
-          className="w-full px-4 py-2 rounded-lg bg-[var(--surface-2)] border border-[var(--border)] text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-blue-500"
-        />
-
-        {/* Footer */}
-        <div className="flex justify-center gap-3 mt-2">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)]"
-          >
-            Отменить
-          </button>
-          <button
-            onClick={handleCreate}
-            className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700"
-          >
-            Создать
-          </button>
-        </div>
+      <div className="flex justify-center gap-3">
+        <Button variant="secondary" onClick={onClose}>Отмена</Button>
+        <Button variant="primary" onClick={handleCreate}>Создать</Button>
       </div>
-    </div>
+    </Modal>
   );
 }

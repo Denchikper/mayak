@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Bell, Clock, Repeat, Pencil, Trash2, Plus, Power, X } from "lucide-react";
 import BigSelect from "../ui/BigSelect";
+import StyledCheckbox from "../ui/StyledCheckbox";
+import Button from "../ui/Button";
 import {
   plannedAlertsListGet,
   plannedAlertCreate,
@@ -36,7 +38,7 @@ function toLocalInput(value) {
 }
 
 const fieldClass =
-  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition";
+  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-colors";
 const labelClass = "block text-xs text-[var(--text-muted)] mb-1.5";
 
 export default function PlannedTab({ token, logout, navigate }) {
@@ -160,22 +162,16 @@ export default function PlannedTab({ token, logout, navigate }) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-1 sm:px-0">
+    <div className="max-w-3xl">
       {/* Заголовок + кнопка добавления */}
       <div className="flex items-center justify-between mb-5 gap-3">
-        <div>
-          <h2 className="text-lg sm:text-xl font-semibold">Запланированные оповещения</h2>
-          <p className="text-xs text-[var(--text-muted)] mt-0.5">
-            {alerts.length > 0 ? `Всего: ${alerts.length}` : "Список пуст"}
-          </p>
-        </div>
+        <p className="text-sm text-[var(--text-muted)]">
+          {alerts.length > 0 ? `Всего: ${alerts.length}` : "Список пуст"}
+        </p>
         {!formOpen && (
-          <button
-            onClick={openCreate}
-            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors shrink-0"
-          >
-            <Plus size={18} /> <span className="hidden sm:inline">Добавить</span>
-          </button>
+          <Button variant="primary" size="sm" onClick={openCreate}>
+            <Plus size={16} /> Добавить
+          </Button>
         )}
       </div>
 
@@ -183,7 +179,7 @@ export default function PlannedTab({ token, logout, navigate }) {
       {formOpen && (
         <form
           onSubmit={handleSubmit}
-          className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-4 sm:p-5 mb-6 shadow-sm animate-modalEnter"
+          className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 sm:p-5 mb-6 animate-fadeIn"
         >
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium text-[var(--text)]">
@@ -253,67 +249,51 @@ export default function PlannedTab({ token, logout, navigate }) {
             </div>
           </div>
 
-          <label className="flex items-center gap-2 text-sm text-[var(--text-soft)] cursor-pointer mt-4">
-            <input
-              type="checkbox"
-              className="accent-blue-600 w-4 h-4"
+          <div className="mt-4">
+            <StyledCheckbox
+              label="Активно сразу после создания"
               checked={form.is_active}
-              onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
+              onChange={(v) => setForm({ ...form, is_active: v })}
             />
-            Активно сразу после создания
-          </label>
+          </div>
 
           <div className="flex gap-3 mt-5">
-            <button
-              type="submit"
-              className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors"
-            >
-              {editingId ? "Сохранить" : "Создать"}
-            </button>
-            <button
-              type="button"
-              onClick={resetForm}
-              className="px-4 py-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-sm cursor-pointer transition-colors"
-            >
-              Отмена
-            </button>
+            <Button type="submit" variant="primary">{editingId ? "Сохранить" : "Создать"}</Button>
+            <Button type="button" variant="secondary" onClick={resetForm}>Отмена</Button>
           </div>
         </form>
       )}
 
-      {error && <p className="text-red-400 text-center mb-3">{error}</p>}
+      {error && <p className="text-sm text-[var(--alarm)] text-center mb-3">{error}</p>}
 
       {/* Список */}
       {loading ? (
-        <p className="text-[var(--text-muted)] text-center py-10">Загрузка...</p>
+        <p className="text-sm text-[var(--text-muted)] text-center py-10">Загрузка...</p>
       ) : alerts.length === 0 ? (
         !formOpen && (
           <div className="flex flex-col items-center justify-center text-center py-14 text-[var(--text-muted)]">
-            <Bell size={40} className="mb-3 opacity-50" />
-            <p>Пока нет запланированных оповещений</p>
-            <button
-              onClick={openCreate}
-              className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors"
-            >
-              <Plus size={18} /> Добавить первое
-            </button>
+            <Bell size={32} className="mb-3 opacity-50" />
+            <p className="text-sm mb-4">Пока нет запланированных оповещений</p>
+            <Button variant="primary" size="sm" onClick={openCreate}>
+              <Plus size={16} /> Добавить первое
+            </Button>
           </div>
         )
       ) : (
-        <div className="grid grid-cols-1 gap-3">
+        <div className="flex flex-col gap-2">
           {alerts.map((alert) => (
             <div
               key={alert.id}
-              className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-4 shadow-sm hover:border-blue-500/60 transition-colors"
+              className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4"
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-medium text-[var(--text)] truncate">{alert.name}</h3>
+                    <h3 className="text-sm font-medium text-[var(--text)] truncate">{alert.name}</h3>
                     <span
                       className={`text-[11px] px-2 py-0.5 rounded-full font-medium ${
                         alert.is_active
-                          ? "bg-green-500/15 text-green-400"
+                          ? "bg-[var(--safe)]/12 text-[var(--safe)]"
                           : "bg-[var(--surface-2)] text-[var(--text-muted)]"
                       }`}
                     >
@@ -321,48 +301,38 @@ export default function PlannedTab({ token, logout, navigate }) {
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-x-4 gap-y-1 flex-wrap mt-2 text-sm text-[var(--text-muted)]">
+                  <div className="flex items-center gap-x-4 gap-y-1 flex-wrap mt-2 text-xs text-[var(--text-muted)]">
                     <span className="inline-flex items-center gap-1.5">
-                      <Bell size={14} />
+                      <Bell size={13} />
                       {targetLabel(alert)}
                     </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Clock size={14} />
+                    <span className="inline-flex items-center gap-1.5 font-mono">
+                      <Clock size={13} />
                       {new Date(alert.start_time).toLocaleString()}
                     </span>
                     <span className="inline-flex items-center gap-1.5">
-                      <Repeat size={14} />
+                      <Repeat size={13} />
                       {RECURRENCE_LABELS[alert.recurrence] || alert.recurrence}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 shrink-0">
-                  <button
+                <div className="flex items-center gap-1 shrink-0">
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={() => handleToggle(alert.id)}
-                    title={alert.is_active ? "Выключить" : "Включить"}
-                    className={`p-2 rounded-lg cursor-pointer transition-colors ${
-                      alert.is_active
-                        ? "bg-green-600/15 text-green-400 hover:bg-green-600/25"
-                        : "bg-[var(--surface-2)] text-[var(--text-muted)] hover:bg-[var(--surface-3)]"
-                    }`}
+                    aria-label={alert.is_active ? "Выключить" : "Включить"}
+                    className={alert.is_active ? "text-[var(--safe)]" : ""}
                   >
-                    <Power size={16} />
-                  </button>
-                  <button
-                    onClick={() => startEdit(alert)}
-                    title="Редактировать"
-                    className="p-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-[var(--text-soft)] cursor-pointer transition-colors"
-                  >
-                    <Pencil size={16} />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(alert.id)}
-                    title="Удалить"
-                    className="p-2 rounded-lg bg-red-600/15 text-red-400 hover:bg-red-600/25 cursor-pointer transition-colors"
-                  >
-                    <Trash2 size={16} />
-                  </button>
+                    <Power size={15} />
+                  </Button>
+                  <Button variant="ghost" size="sm" onClick={() => startEdit(alert)} aria-label="Редактировать">
+                    <Pencil size={15} />
+                  </Button>
+                  <Button variant="ghost" size="sm" onClick={() => handleDelete(alert.id)} aria-label="Удалить" className="hover:text-[var(--alarm)]">
+                    <Trash2 size={15} />
+                  </Button>
                 </div>
               </div>
             </div>

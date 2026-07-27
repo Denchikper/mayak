@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { localTimeToUTC } from "../../../../utils/formatTime";
+import Modal from "../../../ui/Modal";
+import Button from "../../../ui/Button";
 
 export default function AddLessonModal({ onClose, onSave }) {
   const [startTime, setStartTime] = useState("");
@@ -13,70 +15,39 @@ export default function AddLessonModal({ onClose, onSave }) {
     onClose();
   };
 
+  const timeFieldClass =
+    "w-full px-3 py-2.5 bg-[var(--input)] text-[var(--text)] border border-[var(--border)] rounded-lg font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-colors";
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Overlay */}
-      <div
-        onClick={onClose}
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-      />
-
-      {/* Modal content */}
-      <div className="relative z-10 w-full max-w-md bg-[var(--bg)] rounded-2xl p-4 md:p-6 flex flex-col gap-4 animate-modalEnter shadow-xl">
-        
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg md:text-xl font-semibold text-[var(--text)]">Добавить урок</h2>
+    <Modal isOpen onClose={onClose} title="Добавить урок" maxWidth="max-w-sm">
+      <div className="grid grid-cols-2 gap-3 mb-5">
+        <div>
+          <label className="block text-xs text-[var(--text-soft)] mb-1.5">Начало</label>
+          <input
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+            className={timeFieldClass}
+            step="60"
+          />
         </div>
 
-        {/* Inputs */}
-        <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm md:text-base text-[var(--text-soft)] mb-2 block">Начало</label>
-              <input
-                type="time"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-                className="lg:w-[87%] xl:w-full px-3 py-3 bg-[var(--surface-2)] text-[var(--text)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
-                step="60" // Увеличивает шаг для удобства на планшетах
-              />
-            </div>
-
-            <div>
-              <label className="text-sm md:text-base text-[var(--text-soft)] mb-2 block">Конец</label>
-              <input
-                type="time"
-                value={endTime}
-                onChange={(e) => setEndTime(e.target.value)}
-                className="lg:w-[87%] xl:w-full px-3 py-3 bg-[var(--surface-2)] text-[var(--text)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
-                step="60"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Footer buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
-          <button
-            onClick={onClose}
-            className="w-full px-4 py-3 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-base transition-colors duration-200"
-          >
-            Отмена
-          </button>
-          <button
-            onClick={handleSave}
-            disabled={!startTime || !endTime}
-            className={`w-full px-4 py-3 rounded-lg text-base transition-colors duration-200 ${
-              startTime && endTime
-                ? "bg-blue-600 hover:bg-blue-700 cursor-pointer"
-                : "bg-[var(--surface-3)] cursor-not-allowed opacity-50"
-            }`}
-          >
-            Сохранить
-          </button>
+        <div>
+          <label className="block text-xs text-[var(--text-soft)] mb-1.5">Конец</label>
+          <input
+            type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+            className={timeFieldClass}
+            step="60"
+          />
         </div>
       </div>
-    </div>
+
+      <div className="flex justify-center gap-3">
+        <Button variant="secondary" onClick={onClose}>Отмена</Button>
+        <Button variant="primary" onClick={handleSave} disabled={!startTime || !endTime}>Сохранить</Button>
+      </div>
+    </Modal>
   );
 }

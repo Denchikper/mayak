@@ -1,9 +1,11 @@
 // src/pages/AlarmsPage.jsx
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import { Plus, RotateCw } from "lucide-react";
+import AppLayout from "../components/AppLayout";
 import AlarmItem from "../components/Alarms/AlarmItem";
 import CreateAlarmModal from "../components/Alarms/CreateAlarmModal";
 import ConfirmDeleteModal from "../components/Alarms/ConfirmDeleteModal";
+import Button from "../components/ui/Button";
 
 import { getAlarms, createAlarm, updateAlarm, deleteAlarm } from "../api/alarms/alarms";
 import { useAuth } from "../context/AuthContext";
@@ -101,75 +103,57 @@ export default function AlarmsPage() {
     }
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-        <Navbar />
-        <div className="max-w-5xl mx-auto mt-8 px-4 sm:px-6">
-          <p className="text-center py-8">Загрузка тревог...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-      <Navbar />
-
-      <div className="max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
+    <AppLayout>
+      <div className="max-w-3xl px-4 sm:px-6 lg:px-10 py-6 lg:py-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-          <h1 className="text-xl sm:text-2xl font-semibold">Список тревог</h1>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={openCreate}
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg font-medium"
-            >
-              + Создать тревогу
-            </button>
-            <button
-              onClick={loadAlarms}
-              title="Обновить"
-              className="px-3 py-2 bg-[var(--surface-2)] hover:bg-[var(--surface-3)] rounded-lg"
-            >
-              Обновить
-            </button>
+          <h1 className="font-display text-2xl font-bold uppercase tracking-wide">Тревоги</h1>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" onClick={loadAlarms} aria-label="Обновить">
+              <RotateCw size={16} />
+            </Button>
+            <Button variant="primary" size="sm" onClick={openCreate}>
+              <Plus size={16} />
+              Создать тревогу
+            </Button>
           </div>
         </div>
 
-        {error && <p className="text-red-400 mb-4">{error}</p>}
+        {error && <p className="text-sm text-[var(--alarm)] mb-4">{error}</p>}
 
-        <div className="space-y-4 animate-modalEnter">
-          {alarms.length === 0 ? (
-            <p className="text-[var(--text-muted)] text-center py-6">Нет доступных тревог</p>
-          ) : (
-            alarms.map((alarm) => (
-              <AlarmItem
-                key={alarm.id}
-                alarm={alarm}
-                onEdit={() => openEdit(alarm)}
-                onDelete={() => handleDeleteClick(alarm.id, alarm.name)}
-              />
-            ))
-          )}
-        </div>
+        {loading ? (
+          <p className="text-sm text-[var(--text-muted)] text-center py-10">Загрузка тревог...</p>
+        ) : (
+          <div className="flex flex-col gap-2 animate-fadeIn">
+            {alarms.length === 0 ? (
+              <p className="text-sm text-[var(--text-muted)] text-center py-10">Нет доступных тревог</p>
+            ) : (
+              alarms.map((alarm) => (
+                <AlarmItem
+                  key={alarm.id}
+                  alarm={alarm}
+                  onEdit={() => openEdit(alarm)}
+                  onDelete={() => handleDeleteClick(alarm.id, alarm.name)}
+                />
+              ))
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Модал создания/редактирования */}
       <CreateAlarmModal
         isOpen={isCreateOpen}
         onClose={closeCreate}
         onCreate={handleCreateOrUpdate}
-        // если твой CreateAlarmModal поддерживает initial values - передай их
         initialData={editingAlarm ?? undefined}
       />
 
-      {/* Модал подтверждения удаления */}
       <ConfirmDeleteModal
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ isOpen: false, id: null, name: "" })}
         onConfirm={handleConfirmDelete}
         alarmName={deleteModal.name}
       />
-    </div>
+    </AppLayout>
   );
 }

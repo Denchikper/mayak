@@ -36,7 +36,7 @@ export default function DaysList({ scenarioList, daysList }) {
   });
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 w-full">
       {sortedDays.map(day => (
         <DayCard
           key={day.id}

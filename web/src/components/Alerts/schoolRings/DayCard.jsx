@@ -2,37 +2,30 @@ import React from "react";
 
 export default function DayCard({ name, events = [] }) {
   return (
-    <div className="flex flex-col items-center bg-[var(--surface-2)] border border-[var(--border)] shadow-sm p-5 rounded-2xl w-full max-w-xs sm:max-w-sm md:max-w-md transition-all">
-
-      {/* Название дня */}
-      <div className="bg-[var(--surface-3)] text-[var(--text)] font-semibold w-full flex items-center justify-center rounded-2xl mb-2 border border-[var(--border)] p-2 text-center wrap-break-words">
+    <div className="flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 w-full">
+      <div className="text-sm font-medium text-[var(--text)] text-center pb-3 mb-3 border-b border-[var(--border)]">
         {name}
       </div>
 
-      {/* Дополнительный контент */}
-      <div className="w-full flex flex-col gap-2">
+      <div className="flex flex-col gap-1.5">
         {events.length === 0 ? (
-          <div className="text-[var(--text-muted)] text-sm text-center mt-4">Нет уроков</div>
+          <div className="text-[var(--text-muted)] text-sm text-center py-4">Нет уроков</div>
         ) : (
           events
-            .sort((a, b) => a.event_order - b.event_order) // сортируем по порядку
+            .sort((a, b) => a.event_order - b.event_order)
             .map(event => (
-        <div
-            key={event.id}
-            className="bg-[var(--surface-2)] text-[var(--text)] p-3 rounded-lg flex justify-between items-center gap-2 shadow-sm hover:bg-[var(--surface-2)] transition-colors"
-        >
-        {/* Номер урока */}
-            <div className="font-semibold text-blue-400 min-w-6 text-center">
-            {event.event_order}
-            </div>
-
-        {/* Название и время урока */}
-        <div className="flex flex-col flex-1">
-            <span className="font-medium">Урок</span>
-            <span className="text-[var(--text-muted)] text-sm">{event.start_time_local} - {event.end_time_local}</span>
-        </div>
-
-        </div>))
+              <div
+                key={event.id}
+                className="flex items-center gap-3 px-2 py-1.5 rounded-lg"
+              >
+                <div className="font-mono text-xs font-semibold text-[var(--accent)] w-5 text-center shrink-0">
+                  {event.event_order}
+                </div>
+                <div className="text-sm font-mono text-[var(--text-soft)]">
+                  {event.start_time_local} – {event.end_time_local}
+                </div>
+              </div>
+            ))
         )}
       </div>
     </div>
