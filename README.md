@@ -9,8 +9,9 @@ mayak/
 ├── devices/                    # Прошивки и схемы устройств (ESP)
 ├── docs/                       # Документация
 ├── docker-compose.yaml         # Обычный запуск (включает PostgreSQL)
-├── docker-compose.hostnet.yaml # Linux host network запуск
+├── docker-compose.hostnet.yaml # Linux host network запуск (сборка из исходников)
 ├── docker-compose.ghcr.yaml    # Запуск готовых образов из GHCR
+├── docker-compose.ghcr.hostnet.yaml # Готовые образы GHCR + host network
 ├── .env.example                # Пример переменных окружения
 └── README.md
 ```
@@ -283,8 +284,9 @@ docker compose -f docker-compose.ghcr.yaml up -d
 #### Что использовать для деплоя
 
 - для локальной сборки и тестов: `docker-compose.yaml`
-- для Linux с реальным IP устройств: `docker-compose.hostnet.yaml`
+- для Linux с реальным IP устройств (сборка из исходников): `docker-compose.hostnet.yaml`
 - для запуска уже опубликованных образов из GitHub Packages: `docker-compose.ghcr.yaml`
+- для готовых образов GHCR + реальный IP устройств на проде: `docker-compose.ghcr.hostnet.yaml`
 
 ## Доступ после запуска
 
