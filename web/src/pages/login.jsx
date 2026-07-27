@@ -63,7 +63,7 @@ export default function Login() {
           </h1>
         </div>
         <p className="relative max-w-sm text-[var(--text-soft)] text-sm lg:text-base">
-          Система управления звуковыми оповещениями. Панель дежурного диспетчера.
+          Система управления звуковыми оповещениями.
         </p>
       </div>
 
