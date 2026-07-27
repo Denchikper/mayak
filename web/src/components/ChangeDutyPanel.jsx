@@ -40,7 +40,7 @@ export default function ChangeDutyPanel({ token, logout, navigate }) {
           transition-all
         "
       >
-        <h2 className="font-display uppercase tracking-wide text-base sm:text-lg font-semibold text-[var(--text)] text-center">
+        <h2 className="font-display uppercase tracking-wide text-sm sm:text-base font-semibold text-[var(--text)] text-center">
           Смена дежурного администратора
         </h2>
 
@@ -77,7 +77,7 @@ export default function ChangeDutyPanel({ token, logout, navigate }) {
               animate-modalEnter
             "
           >
-            <h3 className="font-display uppercase tracking-wide text-base sm:text-lg font-semibold text-[var(--text)] text-center mb-4">
+            <h3 className="font-display uppercase tracking-wide text-sm sm:text-base font-semibold text-[var(--text)] text-center mb-4">
               Готово
             </h3>
 

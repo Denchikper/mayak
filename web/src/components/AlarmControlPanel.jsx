@@ -91,7 +91,7 @@ export default function AlarmControlPanel({ token, logout, navigate, setActiveAl
                    transition-all duration-300 flex flex-col"
         style={{ height: alarms.length <= 8 ? `${160 + Math.ceil(alarms.length / 2) * 70}px` : "480px" }}
       >
-        <h3 className="font-display uppercase tracking-wide text-lg font-semibold mb-5 text-[var(--text)] text-center flex items-center justify-center gap-3">
+        <h3 className="font-display uppercase tracking-wide text-base font-semibold mb-5 text-[var(--text)] text-center flex items-center justify-center gap-3">
           <span className="beacon-pulse beacon-pulse--idle inline-block w-2.5 h-2.5 rounded-full" style={{ background: "var(--pulse-color)" }} />
           Управление тревогами
         </h3>

@@ -125,7 +125,7 @@ export default function DevicesPage() {
 
       <div className="max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-          <h1 className="font-display uppercase tracking-wide text-xl sm:text-2xl font-semibold">Список устройств</h1>
+          <h1 className="font-display uppercase tracking-wide text-lg sm:text-xl font-semibold">Список устройств</h1>
           <div className="flex items-center gap-3">
             <button
               onClick={openCreate}

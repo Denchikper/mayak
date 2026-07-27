@@ -29,7 +29,7 @@
 
     return (
       <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-lg shadow-lg w-full max-w-sm text-[var(--text)] max-h-110">
-        <h2 className="font-display text-xl font-semibold text-center uppercase tracking-wide flex items-center justify-center gap-3">
+        <h2 className="font-display text-lg font-semibold text-center uppercase tracking-wide flex items-center justify-center gap-3">
           <span className={`beacon-pulse ${pulseClass} inline-block w-2.5 h-2.5 rounded-full`} style={{ background: "var(--pulse-color)" }} />
           Состояние системы
         </h2>

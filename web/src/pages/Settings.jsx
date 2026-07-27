@@ -34,7 +34,7 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <Navbar />
       <div className="max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
-        <h1 className="font-display uppercase tracking-wide text-xl sm:text-2xl font-semibold mb-5">Настройки</h1>
+        <h1 className="font-display uppercase tracking-wide text-lg sm:text-xl font-semibold mb-5">Настройки</h1>
 
         {/* Вкладки */}
         <div className="flex flex-wrap gap-2 mb-6">

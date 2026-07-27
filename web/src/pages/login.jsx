@@ -58,7 +58,7 @@ export default function Login() {
               draggable={false}
             />
           </span>
-          <h1 className="font-display text-3xl lg:text-4xl font-bold tracking-wide uppercase text-[var(--text)]">
+          <h1 className="font-display text-2xl lg:text-3xl font-bold tracking-wide uppercase text-[var(--text)]">
             Маяк
           </h1>
         </div>
@@ -70,7 +70,7 @@ export default function Login() {
       {/* Форма входа */}
       <main className="flex flex-1 justify-center items-center px-4 py-10">
         <div className="w-full max-w-sm">
-          <h2 className="font-display text-2xl font-semibold mb-6 text-center uppercase tracking-wide">
+          <h2 className="font-display text-xl font-semibold mb-6 text-center uppercase tracking-wide">
             Вход
           </h2>
 

@@ -66,7 +66,7 @@ export default function CreateDeviceModal({ isOpen, onClose, onCreate, initialDa
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fadeIn">
       <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-6 w-full max-w-md shadow-xl transform transition-all duration-300 animate-modalEnter">
-        <h2 className="font-display uppercase tracking-wide text-xl font-semibold mb-4 text-center text-[var(--text)]">
+        <h2 className="font-display uppercase tracking-wide text-lg font-semibold mb-4 text-center text-[var(--text)]">
           {initialData ? "Редактировать устройство" : "Добавить устройство"}
         </h2>
 

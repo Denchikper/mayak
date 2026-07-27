@@ -6,7 +6,7 @@ export default function ConfirmDeleteModal({ isOpen, onClose, onConfirm, alarmNa
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-6 w-full max-w-sm shadow-xl animate-fadeIn">
-        <h2 className="font-display uppercase tracking-wide text-xl font-semibold text-center mb-3">Удалить тревогу</h2>
+        <h2 className="font-display uppercase tracking-wide text-lg font-semibold text-center mb-3">Удалить тревогу</h2>
         <p className="text-[var(--text-soft)] text-center mb-6">
           Вы уверены, что хотите удалить тревогу{" "}
           <span className="text-[var(--alarm)] font-semibold">"{alarmName}"</span>?
