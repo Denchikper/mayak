@@ -145,7 +145,7 @@ export default function DevicesPage() {
 
         {error && <p className="text-[var(--alarm)] mb-4">{error}</p>}
 
-        <div className="space-y-4 animate-modalEnter">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 animate-modalEnter">
           {devices.length === 0 ? (
             <p className="text-[var(--text-muted)] text-center py-6">Нет зарегистрированных устройств</p>
           ) : (
