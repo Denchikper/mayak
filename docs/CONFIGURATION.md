@@ -11,7 +11,7 @@ cp .env.example .env
 | Переменная | По умолчанию | Описание |
 |---|---|---|
 | `DATABASE_HOST` | `db` | Хост Postgres. `db` — сервис из `docker-compose.yaml`. Для `docker-compose.hostnet.yaml`/`docker-compose.ghcr.hostnet.yaml` укажите `127.0.0.1`, для внешней БД — её адрес |
-| `DATABASE_NAME` | `system_control_alerts` | Имя БД |
+| `DATABASE_NAME` | `mayak` | Имя БД |
 | `DATABASE_USER` | `postgres` | Пользователь БД |
 | `DATABASE_PASSWORD` | `postgres` | Пароль БД — обязательно смените на проде |
 | `DATABASE_PORT` | `5432` | Порт Postgres |
@@ -41,7 +41,7 @@ openssl rand -base64 48 | tr -d '$'
 ## База данных и первичные данные
 
 PostgreSQL входит в `docker-compose.yaml`/`docker-compose.ghcr.yaml`/`docker-compose.ghcr.hostnet.yaml`
-отдельным сервисом `db` (volume `sca-db-data`), отдельная установка БД не нужна.
+отдельным сервисом `db` (volume `mayak-db-data`), отдельная установка БД не нужна.
 При старте сервер сам синхронизирует схему (`sequelize.sync`) и наполняет её идемпотентным сидом:
 
 - дни недели (Пн–Вс);
