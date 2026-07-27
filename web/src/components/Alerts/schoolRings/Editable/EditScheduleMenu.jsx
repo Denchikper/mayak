@@ -130,7 +130,7 @@ export default function EditScheduleMenu({
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
 
-      <div className="relative z-10 w-[90vw] h-[80vh] bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 flex flex-col shadow-2xl">
+      <div className="relative z-10 w-[90vw] h-[80vh] bg-[var(--surface)] border border-[var(--border)] rounded-lg p-5 flex flex-col shadow-2xl">
         
         {/* HEADER */}
         <div className="flex items-center gap-3 mb-4 justify-between">
@@ -146,7 +146,7 @@ export default function EditScheduleMenu({
               px-4 py-2
               text-lg font-medium
               max-w-[300px]
-              focus:outline-none focus:ring-2 focus:ring-blue-500
+              focus:outline-none focus:ring-2 focus:ring-[var(--beacon)]
             "
           />
           <button
@@ -174,12 +174,12 @@ export default function EditScheduleMenu({
         <div className="mt-4 flex gap-5 justify-end">
           <button
             onClick={() => handleDeleteClick()}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-sm cursor-pointer"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--alarm)] hover:bg-[var(--alarm-strong)] text-[#0A0F16] text-sm cursor-pointer"
           >
             <Trash2 size={16} />
             Удалить
           </button>
-          <button onClick={() => handleSaveSchedule()} className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 cursor-pointer">
+          <button onClick={() => handleSaveSchedule()} className="px-4 py-2 rounded-lg bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] cursor-pointer">
             Сохранить
           </button>
           

@@ -4,11 +4,11 @@ export default function ConfirmDeleteScheduleModal({ isOpen, onClose, onConfirm,
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 w-full max-w-sm shadow-xl animate-fadeIn">
+      <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-6 w-full max-w-sm shadow-xl animate-fadeIn">
         <h2 className="text-xl font-semibold text-center mb-3">Удалить расписание</h2>
         <p className="text-[var(--text-soft)] text-center mb-6">
           Вы уверены, что хотите удалить расписание{" "}
-          <span className="text-red-400 font-semibold">"{scheduleName.name}"</span>?
+          <span className="text-[var(--alarm)] font-semibold">"{scheduleName.name}"</span>?
         </p>
 
         {/* Кнопки теперь по центру */}
@@ -21,7 +21,7 @@ export default function ConfirmDeleteScheduleModal({ isOpen, onClose, onConfirm,
           </button>
           <button
             onClick={onConfirm}
-            className="px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition text-sm font-medium"
+            className="px-5 py-2 rounded-lg bg-[var(--alarm)] hover:bg-[var(--alarm-strong)] text-[#0A0F16] transition text-sm font-medium"
           >
             Удалить
           </button>

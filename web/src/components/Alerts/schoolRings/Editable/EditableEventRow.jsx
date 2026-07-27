@@ -7,7 +7,7 @@ export default function EditableEventRow({ event, handleDeleteLesson, onChange }
     <div className="bg-[var(--surface-2)] rounded-lg p-3 flex gap-3 custom-scrollbar">
       
       {/* номер */}
-      <div className="font-semibold text-blue-400 min-w-6 text-center">
+      <div className="font-semibold text-[var(--beacon)] min-w-6 text-center">
         {event.event_order}
       </div>
 
@@ -41,7 +41,7 @@ export default function EditableEventRow({ event, handleDeleteLesson, onChange }
         </div>
 
         {/* действия */}
-        <button onClick={() => handleDeleteLesson(event.id)} className="flex items-center gap-1 text-xs text-red-400 hover:text-red-300 mt-1 cursor-pointer">
+        <button onClick={() => handleDeleteLesson(event.id)} className="flex items-center gap-1 text-xs text-[var(--alarm)] hover:text-[var(--alarm-strong)] mt-1 cursor-pointer">
           <Trash2 size={14} />
           Удалить урок
         </button>

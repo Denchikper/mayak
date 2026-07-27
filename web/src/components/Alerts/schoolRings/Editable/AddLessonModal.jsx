@@ -22,7 +22,7 @@ export default function AddLessonModal({ onClose, onSave }) {
       />
 
       {/* Modal content */}
-      <div className="relative z-10 w-full max-w-md bg-[var(--bg)] rounded-2xl p-4 md:p-6 flex flex-col gap-4 animate-modalEnter shadow-xl">
+      <div className="relative z-10 w-full max-w-md bg-[var(--bg)] rounded-lg p-4 md:p-6 flex flex-col gap-4 animate-modalEnter shadow-xl">
         
         {/* Header */}
         <div className="flex justify-between items-center">
@@ -38,7 +38,7 @@ export default function AddLessonModal({ onClose, onSave }) {
                 type="time"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
-                className="lg:w-[87%] xl:w-full px-3 py-3 bg-[var(--surface-2)] text-[var(--text)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
+                className="lg:w-[87%] xl:w-full px-3 py-3 bg-[var(--surface-2)] text-[var(--text)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--beacon)] text-base"
                 step="60" // Увеличивает шаг для удобства на планшетах
               />
             </div>
@@ -49,7 +49,7 @@ export default function AddLessonModal({ onClose, onSave }) {
                 type="time"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
-                className="lg:w-[87%] xl:w-full px-3 py-3 bg-[var(--surface-2)] text-[var(--text)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
+                className="lg:w-[87%] xl:w-full px-3 py-3 bg-[var(--surface-2)] text-[var(--text)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--beacon)] text-base"
                 step="60"
               />
             </div>
@@ -69,7 +69,7 @@ export default function AddLessonModal({ onClose, onSave }) {
             disabled={!startTime || !endTime}
             className={`w-full px-4 py-3 rounded-lg text-base transition-colors duration-200 ${
               startTime && endTime
-                ? "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                ? "bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] cursor-pointer"
                 : "bg-[var(--surface-3)] cursor-not-allowed opacity-50"
             }`}
           >
