@@ -65,8 +65,8 @@ export default function CreateDeviceModal({ isOpen, onClose, onCreate, initialDa
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fadeIn">
-      <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 w-full max-w-md shadow-xl transform transition-all duration-300 animate-modalEnter">
-        <h2 className="text-xl font-semibold mb-4 text-center text-[var(--text)]">
+      <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-6 w-full max-w-md shadow-xl transform transition-all duration-300 animate-modalEnter">
+        <h2 className="font-display uppercase tracking-wide text-xl font-semibold mb-4 text-center text-[var(--text)]">
           {initialData ? "Редактировать устройство" : "Добавить устройство"}
         </h2>
 
@@ -79,7 +79,7 @@ export default function CreateDeviceModal({ isOpen, onClose, onCreate, initialDa
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-3 py-2 
-                         text-[var(--text)] placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-200"
+                         text-[var(--text)] placeholder-gray-400 focus:outline-none focus:border-[var(--beacon)] transition-all duration-200"
               placeholder="Например: Relay Controller"
             />
           </div>
@@ -92,7 +92,7 @@ export default function CreateDeviceModal({ isOpen, onClose, onCreate, initialDa
               value={deviceName}
               onChange={(e) => setDeviceName(e.target.value)}
               className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-3 py-2 
-                         text-[var(--text)] placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-200"
+                         text-[var(--text)] placeholder-gray-400 focus:outline-none focus:border-[var(--beacon)] transition-all duration-200"
               placeholder="Relay_device"
             />
           </div>
@@ -104,7 +104,7 @@ export default function CreateDeviceModal({ isOpen, onClose, onCreate, initialDa
               onClick={toggleDropdown}
               className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-3 py-2 text-[var(--text)] 
                          cursor-pointer flex justify-between items-center focus:outline-none 
-                         focus:border-blue-500 transition-all duration-200"
+                         focus:border-[var(--beacon)] transition-all duration-200"
             >
               <span>
                 {deviceTypes.find((t) => t.value === deviceType)?.label || "Выберите тип устройства"}
@@ -148,7 +148,7 @@ export default function CreateDeviceModal({ isOpen, onClose, onCreate, initialDa
               value={ipAddress}
               onChange={(e) => setIpAddress(e.target.value)}
               className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-3 py-2 
-                         text-[var(--text)] placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-200"
+                         text-[var(--text)] placeholder-gray-400 focus:outline-none focus:border-[var(--beacon)] transition-all duration-200"
               placeholder="192.168.1.10"
             />
           </div>
@@ -160,7 +160,7 @@ export default function CreateDeviceModal({ isOpen, onClose, onCreate, initialDa
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-3 py-2 text-[var(--text)] h-20 resize-none
-                         placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-200"
+                         placeholder-gray-400 focus:outline-none focus:border-[var(--beacon)] transition-all duration-200"
               placeholder="Дополнительная информация..."
             />
           </div>
@@ -176,7 +176,7 @@ export default function CreateDeviceModal({ isOpen, onClose, onCreate, initialDa
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition-all duration-200 text-sm font-medium cursor-pointer"
+              className="px-4 py-2 rounded-lg bg-[var(--beacon)] hover:bg-[var(--beacon-strong)] text-[#0A0F16] transition-all duration-200 text-sm font-medium cursor-pointer"
             >
               {initialData ? "Сохранить" : "Добавить"}
             </button>

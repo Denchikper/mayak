@@ -125,11 +125,11 @@ export default function DevicesPage() {
 
       <div className="max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-          <h1 className="text-xl sm:text-2xl font-semibold">Список устройств</h1>
+          <h1 className="font-display uppercase tracking-wide text-xl sm:text-2xl font-semibold">Список устройств</h1>
           <div className="flex items-center gap-3">
             <button
               onClick={openCreate}
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg font-medium cursor-pointer"
+              className="px-4 py-2 bg-[var(--safe)] hover:bg-[var(--safe-strong)] text-[#0A0F16] rounded-md font-medium cursor-pointer"
             >
               + Добавить устройство
             </button>
@@ -143,7 +143,7 @@ export default function DevicesPage() {
           </div>
         </div>
 
-        {error && <p className="text-red-400 mb-4">{error}</p>}
+        {error && <p className="text-[var(--alarm)] mb-4">{error}</p>}
 
         <div className="space-y-4 animate-modalEnter">
           {devices.length === 0 ? (
