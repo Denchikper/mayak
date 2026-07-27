@@ -34,7 +34,7 @@ export default function ChangeDutyPanel({ token, logout, navigate }) {
           max-h-35
           bg-[var(--surface)]
           border border-[var(--border)]
-          rounded-2xl
+          rounded-lg
           p-5 sm:p-6
           shadow-xl
           flex flex-col
@@ -42,7 +42,7 @@ export default function ChangeDutyPanel({ token, logout, navigate }) {
           transition-all
         "
       >
-        <h2 className="text-base sm:text-lg font-semibold text-[var(--text)] text-center">
+        <h2 className="font-display uppercase tracking-wide text-base sm:text-lg font-semibold text-[var(--text)] text-center">
           Смена дежурного администратора
         </h2>
 
@@ -51,14 +51,13 @@ export default function ChangeDutyPanel({ token, logout, navigate }) {
           disabled={loading}
           className="
             w-full py-3
-            rounded-xl
-            bg-linear-to-r from-blue-600 to-blue-500
-            hover:from-blue-700 hover:to-blue-600
-            text-white font-semibold text-sm
+            rounded-md
+            bg-[var(--beacon)]
+            hover:bg-[var(--beacon-strong)]
+            text-[#0A0F16] font-semibold text-sm
             transition-all duration-300
             disabled:opacity-60 disabled:cursor-not-allowed
             hover:scale-[1.02]
-            shadow-[0_0_18px_rgba(59,130,246,0.45)]
           "
         >
           {loading ? "Обновление..." : "Сменить администратора"}
@@ -74,13 +73,13 @@ export default function ChangeDutyPanel({ token, logout, navigate }) {
               max-w-sm
               bg-[var(--surface)]
               border border-[var(--border)]
-              rounded-2xl
+              rounded-lg
               p-5 sm:p-6
               shadow-2xl
               animate-modalEnter
             "
           >
-            <h3 className="text-base sm:text-lg font-semibold text-[var(--text)] text-center mb-4">
+            <h3 className="font-display uppercase tracking-wide text-base sm:text-lg font-semibold text-[var(--text)] text-center mb-4">
               Готово
             </h3>
 
@@ -88,11 +87,11 @@ export default function ChangeDutyPanel({ token, logout, navigate }) {
               {result.message}
             </p>
 
-            <div className="bg-[var(--surface-2)] border border-[var(--border)] rounded-xl p-4 text-center mb-6">
+            <div className="bg-[var(--surface-2)] border border-[var(--border)] rounded-md p-4 text-center mb-6">
               <p className="text-xs text-[var(--text-muted)] mb-1">
                 Новый код доступа
               </p>
-              <p className="text-xl sm:text-2xl font-mono font-bold text-blue-400 tracking-widest break-all">
+              <p className="text-xl sm:text-2xl font-mono font-bold text-[var(--beacon)] tracking-widest break-all">
                 {result.code}
               </p>
             </div>
@@ -100,7 +99,7 @@ export default function ChangeDutyPanel({ token, logout, navigate }) {
             <button
               onClick={() => setIsModalOpen(false)}
               className="
-                w-full py-2 rounded-xl
+                w-full py-2 rounded-md
                 bg-[var(--surface-2)] hover:bg-[var(--surface-3)]
                 text-[var(--text)] font-semibold text-sm
                 transition-all

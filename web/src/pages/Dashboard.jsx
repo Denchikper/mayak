@@ -13,7 +13,7 @@ export default function Dashboard() {
   const [activeAlarm, setActiveAlarm] = useState("Нет активных тревог");
   // Получение тревог при загрузке страницы
   useEffect(() => {
-    document.title = "Панель управления | СУЗО";
+    document.title = "Панель управления | Маяк";
   }, []);
 
 
