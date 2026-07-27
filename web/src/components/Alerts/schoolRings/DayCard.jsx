@@ -2,10 +2,10 @@ import React from "react";
 
 export default function DayCard({ name, events = [] }) {
   return (
-    <div className="flex flex-col items-center bg-[var(--surface-2)] border border-[var(--border)] shadow-sm p-5 rounded-2xl w-full max-w-xs sm:max-w-sm md:max-w-md transition-all">
+    <div className="flex flex-col items-center bg-[var(--surface-2)] border border-[var(--border)] shadow-sm p-5 rounded-lg w-full max-w-xs sm:max-w-sm md:max-w-md transition-all">
 
       {/* Название дня */}
-      <div className="bg-[var(--surface-3)] text-[var(--text)] font-semibold w-full flex items-center justify-center rounded-2xl mb-2 border border-[var(--border)] p-2 text-center wrap-break-words">
+      <div className="bg-[var(--surface-3)] text-[var(--text)] font-semibold w-full flex items-center justify-center rounded-lg mb-2 border border-[var(--border)] p-2 text-center wrap-break-words">
         {name}
       </div>
 
@@ -22,7 +22,7 @@ export default function DayCard({ name, events = [] }) {
             className="bg-[var(--surface-2)] text-[var(--text)] p-3 rounded-lg flex justify-between items-center gap-2 shadow-sm hover:bg-[var(--surface-2)] transition-colors"
         >
         {/* Номер урока */}
-            <div className="font-semibold text-blue-400 min-w-6 text-center">
+            <div className="font-semibold text-[var(--beacon)] min-w-6 text-center">
             {event.event_order}
             </div>
 
