@@ -15,7 +15,7 @@ export default function ProfileTab() {
   const fullName = [user?.lastName, user?.firstName, user?.secondName].filter(Boolean).join(" ");
 
   return (
-    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 shadow-sm max-w-xl">
+    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-5 shadow-sm max-w-xl">
       <h2 className="text-base font-semibold mb-4">Профиль</h2>
       <Row label="ФИО" value={fullName} />
       <Row label="Логин" value={user?.username} />

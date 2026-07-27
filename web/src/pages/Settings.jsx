@@ -16,7 +16,7 @@ export default function SettingsPage() {
   const [tab, setTab] = useState("profile");
 
   useEffect(() => {
-    document.title = "Настройки | СУЗО";
+    document.title = "Настройки | Маяк";
   }, []);
 
   const tabs = [
@@ -34,7 +34,7 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <Navbar />
       <div className="max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
-        <h1 className="text-xl sm:text-2xl font-semibold mb-5">Настройки</h1>
+        <h1 className="font-display uppercase tracking-wide text-xl sm:text-2xl font-semibold mb-5">Настройки</h1>
 
         {/* Вкладки */}
         <div className="flex flex-wrap gap-2 mb-6">
@@ -46,7 +46,7 @@ export default function SettingsPage() {
                 onClick={() => setTab(t.id)}
                 className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium cursor-pointer transition-colors ${
                   active === t.id
-                    ? "bg-blue-600 text-white"
+                    ? "bg-[var(--beacon)] text-[#0A0F16]"
                     : "bg-[var(--surface-2)] text-[var(--text-soft)] hover:bg-[var(--surface-3)]"
                 }`}
               >
