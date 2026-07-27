@@ -15,7 +15,7 @@ cp .env.example .env
 | `DATABASE_USER` | `postgres` | Пользователь БД |
 | `DATABASE_PASSWORD` | `postgres` | Пароль БД — обязательно смените на проде |
 | `DATABASE_PORT` | `5432` | Порт Postgres |
-| `SERVER_PORT` | `2255` | Порт backend (HTTP API + WebSocket) |
+| `SERVER_PORT` | `8080` | Порт backend (HTTP API + WebSocket) |
 | `WEB_PORT` | `3000` | Порт frontend |
 | `VITE_API_URL` | `/api` | Базовый путь API для фронтенда при сборке |
 | `JWT_SECRET` | `change-me` | Секрет для подписи JWT — обязательно сгенерировать случайный (см. ниже) |

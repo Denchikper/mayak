@@ -101,18 +101,18 @@ nano .env   # обязательно сменить DATABASE_PASSWORD и JWT_SEC
 docker compose -f docker-compose.ghcr.hostnet.yaml pull
 docker compose -f docker-compose.ghcr.hostnet.yaml up -d
 docker compose -f docker-compose.ghcr.hostnet.yaml ps
-curl -s http://localhost:2255/api/ping
+curl -s http://localhost:8080/api/ping
 ```
 
 ## Доступ после запуска
 
 - Frontend: `http://<host>:3000`
-- Backend API и WebSocket: `http://<host>:2255`, устройства подключаются напрямую по `ws://<host>:2255`
+- Backend API и WebSocket: `http://<host>:8080`, устройства подключаются напрямую по `ws://<host>:8080`
 - Первый вход: **`admin` / `admin`** (создаётся сидом на пустой БД — смените пароль сразу после входа)
 
 ## Примечания
 
 - Backend обращается к устройствам по IP из базы как обычный сетевой клиент, поэтому доступ
   к устройствам в LAN должен быть открыт с машины, где запущен Docker.
-- Firewall на сервере должен пропускать порты `SERVER_PORT` (2255) и `WEB_PORT` (3000) из
+- Firewall на сервере должен пропускать порты `SERVER_PORT` (8080) и `WEB_PORT` (3000) из
   сети, откуда приходят устройства/пользователи.

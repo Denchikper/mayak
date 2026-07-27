@@ -13,14 +13,14 @@ IPAddress dev_IP(192,168,1,121);
 IPAddress dev_gateway(192,168,1,1);
 IPAddress dev_subnet(255,255,255,0);
 IPAddress dev_dns(192,168,1,1);
-const char* dev_ws = "ws://192.168.1.99:2255";
+const char* dev_ws = "ws://192.168.1.99:8080";
 
 // Prod сеть
 IPAddress prod_IP(172,16,7,102);
 IPAddress prod_gateway(172,16,4,2);
 IPAddress prod_subnet(255,255,248,0);
 IPAddress prod_dns(172,16,4,2);
-const char* prod_ws = "ws://172.16.4.21:2255";
+const char* prod_ws = "ws://172.16.4.21:8080";
 
 void setup() {
   delay(1000);
@@ -42,7 +42,7 @@ void setup() {
   setupAlarm();
 
   if (isDev) {
-    // connectToServer("ws://192.168.1.99:2255");
+    // connectToServer("ws://192.168.1.99:8080");
     connectToServer(dev_ws);
   } else {
     connectToServer(prod_ws);

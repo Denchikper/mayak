@@ -9,6 +9,6 @@ RUN npm ci --omit=dev && npm cache clean --force
 
 COPY . .
 
-EXPOSE 2255
+EXPOSE 8080
 
 CMD ["npm", "run", "start"]

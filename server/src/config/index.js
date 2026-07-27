@@ -12,7 +12,7 @@ const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
 
   // HTTP-сервер
-  serverPort: process.env.SERVER_PORT || 2255,
+  serverPort: process.env.SERVER_PORT || 8080,
   serverIp: process.env.SERVER_IP, // может быть undefined → слушать на всех интерфейсах
 
   // База данных
