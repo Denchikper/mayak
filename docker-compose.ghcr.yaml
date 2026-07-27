@@ -1,6 +1,6 @@
 services:
   server:
-    image: ghcr.io/denchikper/system-control-alerts-server:latest
+    image: ghcr.io/denchikper/mayak-server:latest
     container_name: sca-server
     restart: unless-stopped
     environment:
@@ -18,7 +18,7 @@ services:
       - "${SERVER_PORT:-2255}:2255"
 
   web:
-    image: ghcr.io/denchikper/system-control-alerts-web:latest
+    image: ghcr.io/denchikper/mayak-web:latest
     container_name: sca-web
     restart: unless-stopped
     depends_on:

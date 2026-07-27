@@ -1,14 +1,14 @@
 {
-  "name": "system-control-alerts-server",
+  "name": "mayak-server",
   "version": "1.2.0",
-  "description": "system-control-alerts backend",
-  "homepage": "https://github.com/Denchikper/system-control-alerts#readme",
+  "description": "mayak backend",
+  "homepage": "https://github.com/Denchikper/mayak#readme",
   "bugs": {
-    "url": "https://github.com/Denchikper/system-control-alerts/issues"
+    "url": "https://github.com/Denchikper/mayak/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Denchikper/system-control-alerts.git"
+    "url": "git+https://github.com/Denchikper/mayak.git"
   },
   "license": "AFL-3.0",
   "author": "Daniil Mankus'",
