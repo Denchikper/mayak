@@ -3,43 +3,57 @@
 /* ===== Цветовые токены темы ===== */
 :root,
 :root[data-theme="dark"] {
-  --bg: #0E1117;
-  --surface: #151A22;
-  --surface-2: #161B22;
-  --surface-3: #2b2f3a;
-  --input: #11141A;
-  --border: #374151;
-  --text: #f3f4f6;
-  --text-soft: #d1d5db;
-  --text-muted: #9ca3af;
+  --bg: #0A0F16;
+  --surface: #111925;
+  --surface-2: #182130;
+  --surface-3: #212B3A;
+  --input: #0D131C;
+  --border: #26323F;
+  --text: #EAF1F5;
+  --text-soft: #C3CDD6;
+  --text-muted: #7C8A96;
 
-  --scrollbar-track: #151a22;
-  --scrollbar-thumb: #2b2f3a;
-  --scrollbar-thumb-hover: #3a3f4d;
+  --beacon: #FFB454;
+  --beacon-strong: #FFA53D;
+  --alarm: #FF5C4D;
+  --alarm-strong: #FF4433;
+  --safe: #34D399;
+  --safe-strong: #22B686;
+
+  --scrollbar-track: #111925;
+  --scrollbar-thumb: #212B3A;
+  --scrollbar-thumb-hover: #2C3A4C;
 
   color-scheme: dark;
 }
 
 :root[data-theme="light"] {
-  --bg: #f1f3f6;
+  --bg: #F0F4F7;
   --surface: #ffffff;
-  --surface-2: #f3f5f8;
-  --surface-3: #e3e7ec;
+  --surface-2: #E8EDF1;
+  --surface-3: #DCE3E9;
   --input: #ffffff;
-  --border: #d3d8e0;
-  --text: #111827;
-  --text-soft: #374151;
-  --text-muted: #6b7280;
+  --border: #D3DCE3;
+  --text: #101820;
+  --text-soft: #3C4A56;
+  --text-muted: #6B7885;
 
-  --scrollbar-track: #e3e7ec;
-  --scrollbar-thumb: #c2c8d2;
-  --scrollbar-thumb-hover: #aab2bf;
+  --beacon: #C97A1E;
+  --beacon-strong: #B3690F;
+  --alarm: #DC3B2C;
+  --alarm-strong: #C22A1C;
+  --safe: #1D9A7C;
+  --safe-strong: #158066;
+
+  --scrollbar-track: #E8EDF1;
+  --scrollbar-thumb: #C7D0D8;
+  --scrollbar-thumb-hover: #AEB9C3;
 
   color-scheme: light;
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   width: 100%;
@@ -57,12 +71,11 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Кнопки со сплошным акцентным фоном всегда со светлым текстом (в обеих темах) */
-button.bg-blue-600, button.bg-blue-700,
-button.bg-green-600, button.bg-green-700,
-button.bg-red-600, button.bg-red-700,
-button.bg-yellow-600, button.bg-yellow-700 {
-  color: #fff;
+/* Кнопки со сплошным акцентным фоном всегда с тёмным текстом (в обеих темах) */
+button.bg-\[var\(--beacon\)\],
+button.bg-\[var\(--alarm\)\],
+button.bg-\[var\(--safe\)\] {
+  color: #0A0F16;
 }
 
 img {
@@ -96,6 +109,42 @@ img {
   animation: fadeIn 0.4s ease-out;
 }
 
+/* ===== "Пульс маяка" — статус-индикатор ===== */
+@keyframes beaconPulse {
+  0% { box-shadow: 0 0 0 0 var(--pulse-color, var(--beacon)); }
+  70% { box-shadow: 0 0 0 14px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.beacon-pulse {
+  position: relative;
+  border-radius: 9999px;
+}
+
+.beacon-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  animation: beaconPulse 2.2s ease-out infinite;
+}
+
+.beacon-pulse--idle { --pulse-color: var(--beacon); }
+.beacon-pulse--idle::after { animation-duration: 2.2s; }
+
+.beacon-pulse--alarm { --pulse-color: var(--alarm); }
+.beacon-pulse--alarm::after { animation-duration: 0.9s; }
+
+.beacon-pulse--safe { --pulse-color: var(--safe); }
+.beacon-pulse--safe::after { animation-duration: 2.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .beacon-pulse::after {
+    animation: none;
+    box-shadow: 0 0 0 3px var(--pulse-color, var(--beacon));
+  }
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
@@ -124,7 +173,7 @@ img {
 
 .custom-scrollbar-2::-webkit-scrollbar-thumb:hover {
   background-color: var(--scrollbar-thumb-hover);
-  
+
 }
 
 .custom-scrollbar-2::-webkit-scrollbar-track {
@@ -142,7 +191,7 @@ img {
 
 .custom-scrollbar-3::-webkit-scrollbar-thumb:hover {
   background-color: var(--scrollbar-thumb-hover);
-  
+
 }
 
 .custom-scrollbar-3::-webkit-scrollbar-track {

@@ -4,6 +4,15 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import App from "./App.jsx";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/big-shoulders-display/600";
+import "@fontsource/big-shoulders-display/700";
+import "@fontsource/big-shoulders-display/800";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
 import "./assets/styles/index.css";
 
 createRoot(document.getElementById("root")).render(
