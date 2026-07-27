@@ -30,8 +30,6 @@ export default function ChangeDutyPanel({ token, logout, navigate }) {
           max-w-sm
           sm:max-w-md
           lg:max-w-sm
-          min-h-35
-          max-h-35
           bg-[var(--surface)]
           border border-[var(--border)]
           rounded-lg
