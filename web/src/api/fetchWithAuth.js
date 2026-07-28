@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import { API_BASE_URL } from "../config";
 import { jwtDecode } from "jwt-decode";
 

@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React, { useEffect, useState } from "react";
 import { CalendarClock } from "lucide-react";
 import { schedulesActiveListGet } from "../api/alerts/schedules";

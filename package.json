@@ -12,7 +12,7 @@
   },
   "private": true,
   "license": "AFL-3.0",
-  "author": "Daniel Mankus",
+  "author": "Daniel Benovich",
   "type": "commonjs",
   "main": "index.js",
   "directories": {

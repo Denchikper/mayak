@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React, { useState, useEffect, useRef } from "react";
 import { getServerTime } from "../api/server/getServerTime";
 

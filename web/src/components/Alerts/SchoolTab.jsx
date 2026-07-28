@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React, { useEffect, useState } from "react";
 import DaysList from "./schoolRings/DaysList";
 import StyledSelect from "../ui/StyledSelect";

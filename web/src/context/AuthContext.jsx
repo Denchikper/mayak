@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { jwtDecode } from "jwt-decode";
 import { API_BASE_URL } from "../config";

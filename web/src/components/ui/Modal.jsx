@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React from "react";
 
 export default function Modal({ isOpen, onClose, title, tone = "default", maxWidth = "max-w-sm", children }) {

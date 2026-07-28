@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import EditableDayColumn from "./EditableDayColumn";
 
 export default function EditableDaysGrid({ daysList, scenarioList, setLessonModalOpen, setDayChoicen, setEventsChoicen, handleDeleteLesson, onChange }) {
