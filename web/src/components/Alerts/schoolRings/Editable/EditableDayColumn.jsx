@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import EditableEventRow from "./EditableEventRow";
 import { Plus } from "lucide-react";
 

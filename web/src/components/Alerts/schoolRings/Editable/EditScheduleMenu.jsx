@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import { use, useState } from "react";
 import EditableDaysGrid from "./EditableDaysGrid";
 import { Trash2, X } from "lucide-react";

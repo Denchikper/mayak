@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React, { useEffect, useState } from "react";
 import AppLayout from "../components/AppLayout";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +12,7 @@ import AppearanceTab from "../components/Settings/AppearanceTab.jsx";
 import UsersTab from "../components/Settings/UsersTab.jsx";
 import RolesTab from "../components/Settings/RolesTab.jsx";
 import LogsTab from "../components/Settings/LogsTab.jsx";
+import { APP_VERSION } from "../config";
 
 export default function SettingsPage() {
   const { token, logout, can } = useAuth();
@@ -70,6 +74,18 @@ export default function SettingsPage() {
             <LogsTab token={token} logout={logout} navigate={navigate} />
           )}
         </div>
+
+        <p className="mt-10 text-center text-xs font-mono text-[var(--text-muted)]">
+          Маяк {APP_VERSION} · by{" "}
+          <a
+            href="https://github.com/Denchikper"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-[var(--accent)] transition-colors"
+          >
+            Benovich
+          </a>
+        </p>
       </div>
     </AppLayout>
   );

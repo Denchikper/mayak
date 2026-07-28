@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 export function utcToLocalTime(utcString) {
   if (!utcString) return "";
   const [h, m, s] = utcString.split(":").map(Number);

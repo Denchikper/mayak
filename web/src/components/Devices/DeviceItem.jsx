@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React from "react";
 import { Radio, Pencil, Trash2, Copy, RefreshCw } from "lucide-react";
 import Button from "../ui/Button";

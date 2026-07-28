@@ -1,6 +1,6 @@
 {
   "name": "mayak-server",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "mayak backend",
   "homepage": "https://github.com/Denchikper/mayak#readme",
   "bugs": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/Denchikper/mayak.git"
   },
   "license": "AFL-3.0",
-  "author": "Daniil Mankus'",
+  "author": "Daniel Benovich",
   "type": "commonjs",
   "main": "server.js",
   "scripts": {

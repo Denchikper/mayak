@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import { Trash2 } from "lucide-react";
 import { localTimeToUTC, utcToLocalTime } from "../../../../utils/formatTime";
 

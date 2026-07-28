@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import { fetchWithAuth } from "../fetchWithAuth";
 
 export async function getAlarms(token, logout, navigate) {
