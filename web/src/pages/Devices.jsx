@@ -1,9 +1,11 @@
 // src/pages/DevicesPage.jsx
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import { Plus, RotateCw } from "lucide-react";
+import AppLayout from "../components/AppLayout";
 import DeviceItem from "../components/Devices/DeviceItem";
 import CreateDeviceModal from "../components/Devices/CreateDeviceModal";
 import ConfirmDeleteModal from "../components/Devices/ConfirmDeleteModal";
+import Button from "../components/ui/Button";
 
 import { getDevices, createDevice, updateDevice, deleteDevice, regenerateDeviceToken } from "../api/devices/devices";
 import { useAuth } from "../context/AuthContext";
@@ -108,61 +110,45 @@ export default function DevicesPage() {
     }
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-        <Navbar />
-        <div className="max-w-5xl mx-auto mt-8 px-4 sm:px-6">
-          <p className="text-center py-8">Загрузка устройств...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] ">
-      <Navbar />
-
-      <div className="max-w-5xl mx-auto mt-6 sm:mt-8 px-4 sm:px-6 pb-10">
+    <AppLayout>
+      <div className="px-4 sm:px-6 lg:px-10 py-6 lg:py-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-          <h1 className="text-xl sm:text-2xl font-semibold">Список устройств</h1>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={openCreate}
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg font-medium cursor-pointer"
-            >
-              + Добавить устройство
-            </button>
-            <button
-              onClick={loadDevices}
-              title="Обновить"
-              className="px-3 py-2 bg-[var(--surface-2)] hover:bg-[var(--surface-3)] rounded-lg cursor-pointer"
-            >
-              Обновить
-            </button>
+          <h1 className="font-display text-2xl font-bold uppercase tracking-wide">Устройства</h1>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" onClick={loadDevices} aria-label="Обновить">
+              <RotateCw size={16} />
+            </Button>
+            <Button variant="primary" size="sm" onClick={openCreate}>
+              <Plus size={16} />
+              Добавить устройство
+            </Button>
           </div>
         </div>
 
-        {error && <p className="text-red-400 mb-4">{error}</p>}
+        {error && <p className="text-sm text-[var(--alarm)] mb-4">{error}</p>}
 
-        <div className="space-y-4 animate-modalEnter">
-          {devices.length === 0 ? (
-            <p className="text-[var(--text-muted)] text-center py-6">Нет зарегистрированных устройств</p>
-          ) : (
-            devices.map((device) => (
-              <DeviceItem
-                key={device.id}
-                device={device}
-                onEdit={() => openEdit(device)}
-                onDelete={() => handleDeleteClick(device.id, device.name)}
-                onRegenerateToken={() => handleRegenerateToken(device.id)}
-              />
-            ))
-          )}
-        </div>
+        {loading ? (
+          <p className="text-sm text-[var(--text-muted)] text-center py-10">Загрузка устройств...</p>
+        ) : (
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 animate-fadeIn">
+            {devices.length === 0 ? (
+              <p className="col-span-full text-sm text-[var(--text-muted)] text-center py-10">Нет зарегистрированных устройств</p>
+            ) : (
+              devices.map((device) => (
+                <DeviceItem
+                  key={device.id}
+                  device={device}
+                  onEdit={() => openEdit(device)}
+                  onDelete={() => handleDeleteClick(device.id, device.name)}
+                  onRegenerateToken={() => handleRegenerateToken(device.id)}
+                />
+              ))
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Модал создания/редактирования */}
       <CreateDeviceModal
         isOpen={isCreateOpen}
         onClose={closeCreate}
@@ -170,13 +156,12 @@ export default function DevicesPage() {
         initialData={editingDevice ?? undefined}
       />
 
-      {/* Подтверждение удаления */}
       <ConfirmDeleteModal
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ isOpen: false, id: null, name: "" })}
         onConfirm={handleConfirmDelete}
         deviceName={deleteModal.name}
       />
-    </div>
+    </AppLayout>
   );
 }

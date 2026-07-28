@@ -3,9 +3,11 @@ import { Plus, Trash2, Pencil, X, Lock } from "lucide-react";
 import { getRoles, createRole, updateRole, deleteRole } from "../../api/roles/roles";
 import { getPermissionCatalog } from "../../api/permissions/permissions";
 import { useAuth } from "../../context/AuthContext";
+import StyledCheckbox from "../ui/StyledCheckbox";
+import Button from "../ui/Button";
 
 const fieldClass =
-  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition";
+  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-colors";
 
 export default function RolesTab({ token, logout, navigate }) {
   const { refreshPermissions } = useAuth();
@@ -74,27 +76,27 @@ export default function RolesTab({ token, logout, navigate }) {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold">Роли и доступы</h2>
+        <h2 className="font-display text-base font-semibold uppercase tracking-wide">Роли и доступы</h2>
         {!editing && (
-          <button onClick={startCreate} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors">
-            <Plus size={18} /> Новая роль
-          </button>
+          <Button variant="primary" size="sm" onClick={startCreate}>
+            <Plus size={16} /> Новая роль
+          </Button>
         )}
       </div>
 
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {error && <p className="text-sm text-[var(--alarm)]">{error}</p>}
 
       {/* Редактор */}
       {editing && (
-        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-4 sm:p-5 shadow-sm animate-modalEnter">
+        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 sm:p-5 animate-fadeIn">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium">{editing.id ? "Редактирование роли" : "Новая роль"}</h3>
-            <button onClick={() => setEditing(null)} className="p-1.5 rounded-lg hover:bg-[var(--surface-2)] text-[var(--text-muted)] cursor-pointer"><X size={18} /></button>
+            <Button variant="ghost" size="sm" onClick={() => setEditing(null)} aria-label="Закрыть"><X size={16} /></Button>
           </div>
 
-          <label className="block text-xs text-[var(--text-muted)] mb-1.5">Название роли</label>
+          <label className="block text-xs text-[var(--text-soft)] mb-1.5">Название роли</label>
           <input className={`${fieldClass} max-w-xs mb-5`} value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} placeholder="например: operator" />
 
           {Object.entries(groups).map(([group, items]) => (
@@ -102,39 +104,42 @@ export default function RolesTab({ token, logout, navigate }) {
               <div className="text-xs uppercase tracking-wide text-[var(--text-muted)] mb-2">{group}</div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {items.map((item) => (
-                  <label key={item.key} className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-[var(--surface-2)] cursor-pointer hover:bg-[var(--surface-3)] transition-colors">
-                    <input type="checkbox" className="accent-blue-600 w-4 h-4" checked={editing.permissions.includes(item.key)} onChange={() => togglePerm(item.key)} />
-                    <span className="text-sm text-[var(--text)]">{item.label}</span>
-                  </label>
+                  <div key={item.key} className="px-3 py-2.5 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--bg)] transition-colors">
+                    <StyledCheckbox
+                      label={item.label}
+                      checked={editing.permissions.includes(item.key)}
+                      onChange={() => togglePerm(item.key)}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
           ))}
 
           <div className="flex gap-3 mt-2">
-            <button onClick={handleSave} className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer">Сохранить</button>
-            <button onClick={() => setEditing(null)} className="px-4 py-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-sm cursor-pointer">Отмена</button>
+            <Button variant="primary" onClick={handleSave}>Сохранить</Button>
+            <Button variant="secondary" onClick={() => setEditing(null)}>Отмена</Button>
           </div>
         </div>
       )}
 
       {/* Список ролей */}
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         {roles.map((role) => (
           <div key={role.id} className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-3 flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <div className="font-medium text-[var(--text)] flex items-center gap-2">
+              <div className="text-sm font-medium text-[var(--text)] flex items-center gap-2">
                 {role.name}
-                {role.is_system && <span className="inline-flex items-center gap-1 text-[11px] text-[var(--text-muted)]"><Lock size={12} /> системная</span>}
+                {role.is_system && <span className="inline-flex items-center gap-1 text-[11px] text-[var(--text-muted)]"><Lock size={11} /> системная</span>}
               </div>
-              <div className="text-sm text-[var(--text-muted)]">
+              <div className="text-xs text-[var(--text-muted)]">
                 {role.is_system ? "Полный доступ" : `Прав: ${(role.permissions || []).length}`}
               </div>
             </div>
             {!role.is_system && (
-              <div className="flex items-center gap-2 shrink-0">
-                <button onClick={() => startEdit(role)} title="Редактировать" className="p-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-[var(--text-soft)] cursor-pointer transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => handleDelete(role)} title="Удалить" className="p-2 rounded-lg bg-red-600/15 text-red-400 hover:bg-red-600/25 cursor-pointer transition-colors"><Trash2 size={16} /></button>
+              <div className="flex items-center gap-1 shrink-0">
+                <Button variant="ghost" size="sm" onClick={() => startEdit(role)} aria-label="Редактировать"><Pencil size={15} /></Button>
+                <Button variant="ghost" size="sm" onClick={() => handleDelete(role)} aria-label="Удалить" className="hover:text-[var(--alarm)]"><Trash2 size={15} /></Button>
               </div>
             )}
           </div>

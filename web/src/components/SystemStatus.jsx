@@ -1,71 +1,75 @@
-  import React, { useState, useEffect } from "react";
-  import { getServerStatus } from "../api/server/getServerStatus";
-  import ClockBar from "./ClockBar";
-  
-  export default function SystemStatus({ token, logout, navigate, activeAlarm, setActiveAlarm }) {
+import React, { useState, useEffect } from "react";
+import { getServerStatus } from "../api/server/getServerStatus";
+import ClockBar from "./ClockBar";
 
-    const [devicesList, setDevicesList] = useState([]);
-    const [serverConnected, setServerConnected] = useState(false); // новый флаг
+export default function SystemStatus({ token, logout, navigate, activeAlarm, setActiveAlarm }) {
+  const [devicesList, setDevicesList] = useState([]);
+  const [serverConnected, setServerConnected] = useState(false);
 
-    useEffect(() => {
-      const fetchStatus = async () => {
-        const status = await getServerStatus(token, logout, navigate);
-        setDevicesList(status.devicesList ?? []);
-        setActiveAlarm(status.activeAlarm);
-        setServerConnected(status.serverConnected);
-      };
+  useEffect(() => {
+    const fetchStatus = async () => {
+      const status = await getServerStatus(token, logout, navigate);
+      setDevicesList(status.devicesList ?? []);
+      setActiveAlarm(status.activeAlarm);
+      setServerConnected(status.serverConnected);
+    };
 
-      fetchStatus();
-      const interval = setInterval(fetchStatus, 5000);
-      return () => clearInterval(interval);
-    }, [token, logout, navigate]);
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 5000);
+    return () => clearInterval(interval);
+  }, [token, logout, navigate]);
 
-    return (
-      <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl shadow-lg w-full max-w-sm text-[var(--text)] max-h-110">
-        <h2 className="text-xl font-semibold text-center flex items-center justify-center gap-2">Состояние системы</h2>
+  const alarmActive = activeAlarm !== "Нет активных тревог";
 
-        <p className={`text-center text-sm font-medium mb-5 ${
-          serverConnected ? "text-green-500" : "text-red-500"
-        }`}>
-          {serverConnected ? "Сервер подключен" : "Сервер недоступен"}
-        </p>
-
-        <div className="border-t border-[var(--border)] pt-3 mb-5">
-          <ClockBar 
-              token={token}
-              logout={logout}
-              navigate={navigate}/>
-        </div>
-
-        <div className="border-t border-[var(--border)] pt-3 mb-5">
-          <p className="text-center text-[var(--text-muted)] uppercase tracking-wide">Активная тревога</p>
-          <p
-            className={`text-center mt-2 font-bold text-l py-2 rounded-lg ${
-              activeAlarm === "Нет активных тревог"
-                ? "text-green-500 bg-green-100/20"
-                : "text-red-500 bg-red-100/20"
-            }`}
-          >
-            {activeAlarm}
-          </p>
-        </div>
-
-      <div className="border-t border-[var(--border)] pt-3 mb-4">
-    <p className="text-center text-[var(--text-muted)] uppercase tracking-wide mb-2">Устройства</p>
-    {Array.isArray(devicesList) && devicesList.length > 0 ? (
-      devicesList.map((device, i) => (
-        <div key={i} className="flex justify-between">
-          <span>{i + 1}) {device.name}</span>
-          <span className={device.is_online ? "text-green-500" : "text-red-500"}>
-            {device.is_online ? "В сети" : "Не в сети"}
+  return (
+    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-5 w-full flex flex-col">
+      <div className="flex items-center justify-between">
+        <h2 className="font-display text-base font-semibold uppercase tracking-wide">Состояние системы</h2>
+        <span className="flex items-center gap-2 text-xs font-medium">
+          <span
+            className={`beacon-dot ${serverConnected ? "beacon-dot--live" : ""}`}
+            style={{ "--pulse-color": serverConnected ? "var(--safe)" : "var(--alarm)" }}
+          />
+          <span className={serverConnected ? "text-[var(--safe)]" : "text-[var(--alarm)]"}>
+            {serverConnected ? "Онлайн" : "Недоступен"}
           </span>
-        </div>
-      ))
-    ) : (
-      <p className="text-center text-red-500">Не удалось получить список устройств</p>
-    )}
-  </div>
-
+        </span>
       </div>
-    );
-  }
+
+      <div className="border-t border-[var(--border)] mt-4 pt-4">
+        <ClockBar token={token} logout={logout} navigate={navigate} />
+      </div>
+
+      <div className="border-t border-[var(--border)] mt-4 pt-4">
+        <p className="text-xs text-[var(--text-muted)] uppercase tracking-wide mb-2">Активная тревога</p>
+        <p
+          className={`text-sm font-semibold py-2 px-3 rounded-lg text-center ${
+            alarmActive
+              ? "text-[var(--alarm)] bg-[var(--alarm)]/10"
+              : "text-[var(--safe)] bg-[var(--safe)]/10"
+          }`}
+        >
+          {activeAlarm}
+        </p>
+      </div>
+
+      <div className="border-t border-[var(--border)] mt-4 pt-4">
+        <p className="text-xs text-[var(--text-muted)] uppercase tracking-wide mb-2">Устройства</p>
+        {Array.isArray(devicesList) && devicesList.length > 0 ? (
+          <ul className="flex flex-col gap-1.5 max-h-40 overflow-y-auto custom-scrollbar pr-1">
+            {devicesList.map((device, i) => (
+              <li key={i} className="flex items-center justify-between text-sm">
+                <span className="text-[var(--text-soft)] truncate">{device.name}</span>
+                <span className={`text-xs font-medium shrink-0 ml-2 ${device.is_online ? "text-[var(--safe)]" : "text-[var(--text-muted)]"}`}>
+                  {device.is_online ? "В сети" : "Не в сети"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-[var(--text-muted)] text-center">Не удалось получить список устройств</p>
+        )}
+      </div>
+    </div>
+  );
+}

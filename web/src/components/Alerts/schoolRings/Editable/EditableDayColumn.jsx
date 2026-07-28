@@ -3,8 +3,8 @@ import { Plus } from "lucide-react";
 
 export default function EditableDayColumn({ day, events, setLessonModalOpen, setDayChoicen, setEventsChoicen, handleDeleteLesson, onChange }) {
   return (
-    <div className="bg-[var(--surface-2)] border border-[var(--border)] shadow-sm rounded-xl p-3 flex flex-col min-w-[200px] h-full custom-scrollbar">
-      <div className="text-center text-sm font-semibold text-[var(--text)] bg-[var(--surface-3)] border border-[var(--border)] rounded-lg py-2 mb-2">
+    <div className="bg-[var(--surface-2)] border border-[var(--border)] rounded-xl p-3 flex flex-col min-w-[240px] h-full">
+      <div className="text-center text-sm font-medium text-[var(--text)] pb-2 mb-2 border-b border-[var(--border)]">
         {day.name}
       </div>
 
@@ -22,16 +22,16 @@ export default function EditableDayColumn({ day, events, setLessonModalOpen, set
           ))}
       </div>
 
-      <div className="pt-2 pb-2 sticky bottom-0 bg-[var(--surface-2)]">
-        <button  
+      <div className="pt-2 sticky bottom-0 bg-[var(--surface-2)]">
+        <button
           onClick={() => {
             setLessonModalOpen(true);
             setEventsChoicen(events);
             setDayChoicen(day);
-          }} 
-          className="w-full flex items-center justify-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors py-2 bg-[var(--surface)] rounded-lg cursor-pointer"
+          }}
+          className="w-full flex items-center justify-center gap-2 text-sm text-[var(--accent)] hover:text-[var(--accent-strong)] transition-colors py-2 bg-[var(--surface)] border border-[var(--border)] rounded-lg cursor-pointer"
         >
-          <Plus size={16} />
+          <Plus size={15} />
           Добавить урок
         </button>
       </div>

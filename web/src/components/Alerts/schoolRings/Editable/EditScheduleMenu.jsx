@@ -2,6 +2,7 @@ import { use, useState } from "react";
 import EditableDaysGrid from "./EditableDaysGrid";
 import { Trash2, X } from "lucide-react";
 import AddLessonModal from "./AddLessonModal";
+import Button from "../../../ui/Button";
 import { deleteEventsByID, eventsCreate, eventUpdate } from "../../../../api/alerts/events";
 import { scenariosGet, scenariosGetByDay } from "../../../../api/alerts/scenarios";
 import { schedulesListGet, schedulesUpdate } from "../../../../api/alerts/schedules";
@@ -110,55 +111,65 @@ export default function EditScheduleMenu({
         }
     };
 
+    // После удаления урока в номерах остальных образуется пробел (1 2 3 5 6) —
+    // пересчитываем event_order подряд в каждом дне, где есть пропуски.
+    const renumberScenarios = async (scenarios) => {
+        const result = [];
+        for (const scenario of scenarios) {
+            const events = [...(scenario.ScheduleEvents || [])].sort((a, b) => a.event_order - b.event_order);
+            const renumbered = [];
+            for (let i = 0; i < events.length; i++) {
+                const expectedOrder = i + 1;
+                let event = events[i];
+                if (event.event_order !== expectedOrder) {
+                    const res = await eventUpdate(token, event.id, { event_order: expectedOrder }, logout, navigate);
+                    if (res.ok) event = { ...event, event_order: expectedOrder };
+                }
+                renumbered.push(event);
+            }
+            result.push({ ...scenario, ScheduleEvents: renumbered });
+        }
+        return result;
+    };
+
     const handleDeleteLesson = async (event_id) => {
         const res = await deleteEventsByID(token, event_id, logout, navigate);
         if (res.ok) {
             const updatedScenarioList = await scenariosGet(token, schedulesActual.id, logout, navigate);
             if (updatedScenarioList.ok) {
-              setScenarioList(updatedScenarioList.data);
-            }   
+              const renumbered = await renumberScenarios(updatedScenarioList.data);
+              setScenarioList(renumbered);
+            }
         } else {
             console.error("Ошибка при удалении урока", res);
         }
     };
 
   return (
-    <div className="fixed inset-0 z-48 flex items-center justify-center animate-modalEnter">
+    <div className="fixed inset-0 z-48 flex items-center justify-center px-4">
       {/* overlay */}
       <div
         onClick={onClose}
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#05070A]/70"
       />
 
-      <div className="relative z-10 w-[90vw] h-[80vh] bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 flex flex-col shadow-2xl">
-        
+      <div className="relative z-10 w-full max-w-6xl h-[85vh] bg-[var(--surface)] border border-[var(--border)] rounded-xl p-5 flex flex-col animate-modalEnter">
+
         {/* HEADER */}
         <div className="flex items-center gap-3 mb-4 justify-between">
           <input
             value={nameSchedule}
             onChange={(e) => setNameSchedule(e.target.value)}
             placeholder="Название расписания"
-            className="
-              flex-1
-              bg-[var(--surface-2)]
-              border border-[var(--border)]
-              rounded-lg
-              px-4 py-2
-              text-lg font-medium
-              max-w-[300px]
-              focus:outline-none focus:ring-2 focus:ring-blue-500
-            "
+            className="flex-1 max-w-[300px] bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-colors"
           />
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg hover:bg-[var(--surface-2)]"
-          >
-            <X />
-          </button>
+          <Button variant="ghost" size="sm" onClick={onClose} aria-label="Закрыть">
+            <X size={18} />
+          </Button>
         </div>
 
         {/* CONTENT */}
-        <div className="flex-1 overflow-x-auto pr flex custom-scrollbar-3 custom-scrollbar">
+        <div className="flex-1 overflow-x-auto flex custom-scrollbar">
           <EditableDaysGrid
             daysList={daysList}
             scenarioList={scenarioList}
@@ -171,18 +182,14 @@ export default function EditScheduleMenu({
         </div>
 
         {/* FOOTER */}
-        <div className="mt-4 flex gap-5 justify-end">
-          <button
-            onClick={() => handleDeleteClick()}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-sm cursor-pointer"
-          >
-            <Trash2 size={16} />
+        <div className="mt-4 flex gap-3 justify-end">
+          <Button variant="danger" size="sm" onClick={() => handleDeleteClick()}>
+            <Trash2 size={15} />
             Удалить
-          </button>
-          <button onClick={() => handleSaveSchedule()} className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 cursor-pointer">
+          </Button>
+          <Button variant="primary" size="sm" onClick={() => handleSaveSchedule()}>
             Сохранить
-          </button>
-          
+          </Button>
         </div>
       </div>
       {isLessonModalOpen && (

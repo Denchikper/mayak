@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { ChevronDown } from "lucide-react";
 
 export default function TimePicker({ value, onChange }) {
   const [open, setOpen] = useState(false);
@@ -15,36 +16,27 @@ export default function TimePicker({ value, onChange }) {
 
   return (
     <div ref={ref} className="relative w-full">
-      {/* input button */}
       <button
+        type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex justify-between items-center px-3 py-2 bg-[var(--surface-2)] border border-[var(--border)] rounded-lg text-sm text-[var(--text)] hover:border-blue-500 transition-colors"
+        className="w-full flex justify-between items-center px-3 py-2 bg-[var(--input)] border border-[var(--border)] rounded-lg text-sm font-mono text-[var(--text)] hover:border-[var(--accent)] transition-colors cursor-pointer"
       >
-        <span>{h}</span>
-        <span className="text-[var(--text-muted)]">:</span>
-        <span>{m}</span>
-        <svg
-          className={`w-4 h-4 ml-2 transition-transform ${open ? "rotate-180" : ""}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <span>{h}:{m}</span>
+        <ChevronDown size={15} className={`text-[var(--text-muted)] transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
-      {/* dropdown */}
       {open && (
-        <div className="absolute z-50 mt-1 flex w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg shadow-lg overflow-hidden">
-          
-          {/* часы */}
-          <div className="max-h-40 overflow-y-auto w-1/2 border-r border-[var(--border)]">
+        <div className="absolute z-50 mt-1 flex w-full bg-[var(--surface)] border border-[var(--border)] rounded-lg overflow-hidden animate-fadeIn">
+          <div className="max-h-40 overflow-y-auto w-1/2 border-r border-[var(--border)] custom-scrollbar">
             {Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0")).map((hour) => (
               <button
                 key={hour}
+                type="button"
                 onClick={() => onChange(`${hour}:${m}`)}
-                className={`w-full px-3 py-2 text-sm text-left hover:bg-blue-600 transition-colors ${
-                  hour === h ? "bg-blue-700 text-white font-bold" : "text-[var(--text)]"
+                className={`w-full px-3 py-1.5 text-sm font-mono text-left transition-colors cursor-pointer ${
+                  hour === h
+                    ? "bg-[var(--accent)] text-[var(--accent-contrast)] font-semibold"
+                    : "text-[var(--text)] hover:bg-[var(--surface-2)]"
                 }`}
               >
                 {hour}
@@ -52,21 +44,22 @@ export default function TimePicker({ value, onChange }) {
             ))}
           </div>
 
-          {/* минуты */}
-          <div className="max-h-40 overflow-y-auto w-1/2">
-            {["00","05","10","15","20","25","30","35","40","45","50","55"].map((min) => (
+          <div className="max-h-40 overflow-y-auto w-1/2 custom-scrollbar">
+            {["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"].map((min) => (
               <button
                 key={min}
+                type="button"
                 onClick={() => onChange(`${h}:${min}`)}
-                className={`w-full px-3 py-2 text-sm text-left hover:bg-blue-600 transition-colors ${
-                  min === m ? "bg-blue-700 text-white font-bold" : "text-[var(--text)]"
+                className={`w-full px-3 py-1.5 text-sm font-mono text-left transition-colors cursor-pointer ${
+                  min === m
+                    ? "bg-[var(--accent)] text-[var(--accent-contrast)] font-semibold"
+                    : "text-[var(--text)] hover:bg-[var(--surface-2)]"
                 }`}
               >
                 {min}
               </button>
             ))}
           </div>
-
         </div>
       )}
     </div>

@@ -41,72 +41,71 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[var(--bg)] text-[var(--text)] relative">
-      <header className="flex items-center justify-start px-6 py-2 border-b border-[var(--border)] select-none">
-        <img
-          src="/icon.png"
-          alt="logo"
-          className="w-10 h-10 mr-3 pointer-events-none select-none"
-        />
-        <div className="w-px h-8 bg-[var(--surface-2)] mx-3"></div>
-        <h1 className="text-[15px] font-semibold text-[var(--text)]">
-          Маяк
-        </h1>
-      </header>
+    <div className="flex flex-col lg:flex-row min-h-screen bg-[var(--bg)] text-[var(--text)]">
+      {/* Брендовая панель */}
+      <div className="flex flex-col justify-center px-8 py-10 lg:py-0 lg:w-1/2 lg:px-16 border-b lg:border-b-0 lg:border-r border-[var(--border)]">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="beacon-dot beacon-dot--live w-3 h-3" />
+          <img src="/icon.png" alt="" className="w-10 h-10 pointer-events-none select-none" draggable={false} />
+          <h1 className="font-display text-2xl lg:text-3xl font-bold uppercase tracking-wide">Маяк</h1>
+        </div>
+        <p className="max-w-sm text-[var(--text-soft)] text-sm lg:text-base">
+          Система управления звуковыми оповещениями.
+        </p>
+      </div>
 
-      <main className="flex flex-1 justify-center items-center px-4">
-        <div className="bg-[var(--surface)] p-6 sm:p-8 rounded-2xl shadow-lg w-full max-w-sm">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Вход</h2>
+      {/* Форма входа */}
+      <main className="flex flex-1 justify-center items-center px-4 py-12">
+        <div className="w-full max-w-sm">
+          <h2 className="font-display text-xl font-semibold uppercase tracking-wide mb-6 text-center">Вход</h2>
 
-          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
-              <label className="block mb-1 text-sm">Логин</label>
+              <label className="block mb-1.5 text-sm text-[var(--text-soft)]">Логин</label>
               <input
                 type="text"
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="w-full px-3 py-2 rounded-md bg-[var(--input)] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2.5 rounded-lg bg-[var(--input)] border border-[var(--border)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-colors"
                 placeholder="Введите логин"
                 required
               />
             </div>
 
             <div>
-              <label className="block mb-1 text-sm">Пароль</label>
+              <label className="block mb-1.5 text-sm text-[var(--text-soft)]">Пароль</label>
               <input
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-3 py-2 rounded-md bg-[var(--input)] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2.5 rounded-lg bg-[var(--input)] border border-[var(--border)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-colors"
                 placeholder="Введите пароль"
                 required
               />
             </div>
 
             {error && (
-              <p className="text-red-400 text-sm text-center">{error}</p>
+              <p className="text-[var(--alarm)] text-sm text-center">{error}</p>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className={`mt-4 py-2 rounded-md text-white font-medium transition ${
+              className={`mt-2 py-2.5 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
                 loading
-                  ? "bg-[var(--surface-3)] cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
+                  ? "bg-[var(--surface-2)] text-[var(--text-muted)] cursor-not-allowed"
+                  : "bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-[var(--accent-contrast)]"
               }`}
             >
               {loading ? "Вход..." : "Войти"}
             </button>
           </form>
+
+          <p className="mt-10 text-center text-xs font-mono text-[var(--text-muted)]">Версия 1.0.0</p>
         </div>
       </main>
-
-      <footer className="absolute bottom-2 right-4 text-sm text-[var(--text-muted)]">
-        Версия 1.0.0
-      </footer>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar.jsx";
+import AppLayout from "../components/AppLayout";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import SchoolTab from "../components/Alerts/SchoolTab.jsx";
@@ -7,54 +7,45 @@ import PlannedTab from "../components/Alerts/PlannedTab.jsx";
 
 export default function PlannedAlertsPage() {
   const [activeTab, setActiveTab] = useState("school");
-  const [loading, setLoading] = useState(false);
   const { token, logout } = useAuth();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Запланированные оповещения | СУЗО";
+    document.title = "Запланированные оповещения | Маяк";
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col select-none">
-      <Navbar />
-      <div className="flex-1 flex flex-col items-center p-4 sm:p-6">
+    <AppLayout>
+      <div className="px-4 sm:px-6 lg:px-10 py-6 lg:py-10">
+        <h1 className="font-display text-2xl font-bold uppercase tracking-wide mb-6">Оповещения</h1>
 
-        {/* Переключатель по центру */}
-        <div className="mb-8">
-          <div className="inline-flex bg-[var(--surface-2)] rounded-xl p-1">
-            <button
-              onClick={() => setActiveTab("school")}
-              className={`px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm transition
-                ${activeTab === "school" ? "bg-blue-600 text-white" : "text-[var(--text-muted)] hover:text-[var(--text)]" }`}
-            >
-              Школьные звонки
-            </button>
+        <div className="inline-flex bg-[var(--surface-2)] rounded-lg p-1 mb-8">
+          <button
+            onClick={() => setActiveTab("school")}
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer
+              ${activeTab === "school" ? "bg-[var(--surface)] text-[var(--text)]" : "text-[var(--text-muted)] hover:text-[var(--text)]"}`}
+          >
+            Школьные звонки
+          </button>
 
-            <button
-              onClick={() => setActiveTab("planned")}
-              className={`px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm transition
-                ${activeTab === "planned" ? "bg-blue-600 text-white" : "text-[var(--text-muted)] hover:text-[var(--text)]" }`}
-            >
-              Запланированные оповещения
-            </button>
-          </div>
+          <button
+            onClick={() => setActiveTab("planned")}
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer
+              ${activeTab === "planned" ? "bg-[var(--surface)] text-[var(--text)]" : "text-[var(--text-muted)] hover:text-[var(--text)]"}`}
+          >
+            Запланированные оповещения
+          </button>
         </div>
 
-        {/* Контент */}
-        <div className="w-full rounded-xl p-2 scrollbar-hidden overflow-y-auto scrollbar-hidden">
-          {loading && <p className="text-center text-[var(--text-muted)]">Загрузка...</p>}
+        {activeTab === "school" && (
+          <SchoolTab token={token} logout={logout} navigate={navigate} />
+        )}
 
-          {activeTab === "school" && !loading && (
-            <SchoolTab token={token} logout={logout} navigate={navigate}/>
-          )}
-
-          {activeTab === "planned" && !loading && (
-            <PlannedTab token={token} logout={logout} navigate={navigate} />
-          )}
-        </div>
+        {activeTab === "planned" && (
+          <PlannedTab token={token} logout={logout} navigate={navigate} />
+        )}
       </div>
-    </div>
+    </AppLayout>
   );
 }

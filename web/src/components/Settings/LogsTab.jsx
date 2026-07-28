@@ -2,18 +2,19 @@ import React, { useEffect, useState, useCallback } from "react";
 import { RefreshCw, ChevronLeft, ChevronRight } from "lucide-react";
 import { getLogs, getLogLevels } from "../../api/logs/logs";
 import BigSelect from "../ui/BigSelect";
+import Button from "../ui/Button";
 
 const PAGE = 50;
 
 const fieldClass =
-  "bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition";
+  "bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] transition-colors";
 
 // Цвет бейджа уровня
 function levelClass(level) {
-  if (level.includes("error")) return "bg-red-500/15 text-red-400";
-  if (level.includes("warn")) return "bg-yellow-500/15 text-yellow-400";
-  if (level === "audit") return "bg-blue-500/15 text-blue-400";
-  if (level.includes("success")) return "bg-green-500/15 text-green-400";
+  if (level.includes("error")) return "bg-[var(--alarm)]/12 text-[var(--alarm)]";
+  if (level.includes("warn")) return "bg-[var(--accent)]/12 text-[var(--accent)]";
+  if (level === "audit") return "bg-[var(--text-muted)]/15 text-[var(--text-soft)]";
+  if (level.includes("success")) return "bg-[var(--safe)]/12 text-[var(--safe)]";
   return "bg-[var(--surface-2)] text-[var(--text-muted)]";
 }
 
@@ -50,20 +51,20 @@ export default function LogsTab({ token, logout, navigate }) {
   const pages = Math.max(1, Math.ceil(count / PAGE));
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-        <h2 className="text-base font-semibold flex-1">Журнал ({count})</h2>
+        <h2 className="font-display text-base font-semibold uppercase tracking-wide flex-1">Журнал ({count})</h2>
         <div className="w-44"><BigSelect value={level} onChange={(v) => { setLevel(v); load(0, v, q); }} options={levelOptions} /></div>
         <form
           onSubmit={(e) => { e.preventDefault(); load(0, level, q); }}
           className="flex gap-2"
         >
           <input className={fieldClass} placeholder="Поиск…" value={q} onChange={(e) => setQ(e.target.value)} />
-          <button type="button" onClick={() => load(offset)} title="Обновить" className="p-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] cursor-pointer"><RefreshCw size={16} /></button>
+          <Button type="button" variant="ghost" size="sm" onClick={() => load(offset)} aria-label="Обновить"><RefreshCw size={15} /></Button>
         </form>
       </div>
 
-      <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden">
+      <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl overflow-hidden">
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-sm">
             <thead>
@@ -82,7 +83,7 @@ export default function LogsTab({ token, logout, navigate }) {
               ) : (
                 rows.map((r) => (
                   <tr key={r.id} className="border-b border-[var(--border)] last:border-0 align-top">
-                    <td className="px-3 py-2 whitespace-nowrap text-[var(--text-muted)]">{new Date(r.created_at).toLocaleString()}</td>
+                    <td className="px-3 py-2 whitespace-nowrap font-mono text-xs text-[var(--text-muted)]">{new Date(r.created_at).toLocaleString()}</td>
                     <td className="px-3 py-2"><span className={`text-[11px] px-2 py-0.5 rounded-full ${levelClass(r.level)}`}>{r.level}</span></td>
                     <td className="px-3 py-2 whitespace-nowrap text-[var(--text-soft)]">{r.username || "—"}{r.ip ? ` (${r.ip})` : ""}</td>
                     <td className="px-3 py-2 text-[var(--text)] break-all">
@@ -100,20 +101,22 @@ export default function LogsTab({ token, logout, navigate }) {
       <div className="flex items-center justify-between">
         <span className="text-sm text-[var(--text-muted)]">Стр. {page} из {pages}</span>
         <div className="flex gap-2">
-          <button
+          <Button
+            variant="secondary"
+            size="sm"
             disabled={offset === 0}
             onClick={() => load(Math.max(0, offset - PAGE))}
-            className="inline-flex items-center gap-1 px-3 py-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-sm cursor-pointer disabled:opacity-40"
           >
-            <ChevronLeft size={16} /> Назад
-          </button>
-          <button
+            <ChevronLeft size={15} /> Назад
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
             disabled={offset + PAGE >= count}
             onClick={() => load(offset + PAGE)}
-            className="inline-flex items-center gap-1 px-3 py-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-sm cursor-pointer disabled:opacity-40"
           >
-            Вперёд <ChevronRight size={16} />
-          </button>
+            Вперёд <ChevronRight size={15} />
+          </Button>
         </div>
       </div>
     </div>

@@ -1,13 +1,14 @@
 import React from "react";
+import { ChevronDown } from "lucide-react";
 
 export default function StyledSelect({ style, options, value, onChange, placeholder }) {
-  // базовый класс
-  const baseClass = "appearance-none w-full bg-[var(--surface)] text-[var(--text)] border border-[var(--border)] rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200";
+  const baseClass =
+    "appearance-none w-full bg-[var(--input)] text-[var(--text)] border border-[var(--border)] rounded-lg py-2.5 pl-9 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-colors cursor-pointer";
 
   return (
     <div className="relative inline-block w-full">
       <select
-        className={style ? style : baseClass} // если есть style — используем его, иначе базовый
+        className={style ? style : baseClass}
         value={value}
         onChange={onChange}
       >
@@ -23,17 +24,8 @@ export default function StyledSelect({ style, options, value, onChange, placehol
         ))}
       </select>
 
-      {/* Стрелка — смещена влево */}
       <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 text-[var(--text-muted)]"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 9l6 6 6-6" />
-        </svg>
+        <ChevronDown size={15} className="text-[var(--text-muted)]" />
       </div>
     </div>
   );

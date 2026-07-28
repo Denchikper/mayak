@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { changeMyPassword } from "../../api/users/users";
+import Button from "../ui/Button";
 
 const fieldClass =
-  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition";
-const labelClass = "block text-xs text-[var(--text-muted)] mb-1.5";
+  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-colors";
+const labelClass = "block text-xs text-[var(--text-soft)] mb-1.5";
 
 export default function PasswordTab({ token, logout, navigate }) {
   const { user } = useAuth();
@@ -32,8 +33,8 @@ export default function PasswordTab({ token, logout, navigate }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 shadow-sm max-w-md space-y-4">
-      <h2 className="text-base font-semibold">Смена пароля</h2>
+    <form onSubmit={handleSubmit} className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-5 max-w-md flex flex-col gap-4">
+      <h2 className="font-display text-base font-semibold uppercase tracking-wide">Смена пароля</h2>
 
       <div>
         <label className={labelClass}>Новый пароль</label>
@@ -44,16 +45,12 @@ export default function PasswordTab({ token, logout, navigate }) {
         <input className={fieldClass} type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="••••••" />
       </div>
 
-      {err && <p className="text-red-400 text-sm">{err}</p>}
-      {msg && <p className="text-green-400 text-sm">{msg}</p>}
+      {err && <p className="text-sm text-[var(--alarm)]">{err}</p>}
+      {msg && <p className="text-sm text-[var(--safe)]">{msg}</p>}
 
-      <button
-        type="submit"
-        disabled={saving}
-        className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors disabled:opacity-60"
-      >
+      <Button type="submit" variant="primary" disabled={saving} className="self-start">
         {saving ? "Сохранение..." : "Сменить пароль"}
-      </button>
+      </Button>
     </form>
   );
 }

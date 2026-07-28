@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Plus, Trash2, X } from "lucide-react";
+import { Plus, Trash2, X, KeyRound } from "lucide-react";
 import { getUsers, createUser, updateUser, deleteUser } from "../../api/users/users";
 import { getRoles } from "../../api/roles/roles";
 import BigSelect from "../ui/BigSelect";
+import Button from "../ui/Button";
+import Modal from "../ui/Modal";
 import { useAuth } from "../../context/AuthContext";
 
 const fieldClass =
-  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition";
-const labelClass = "block text-xs text-[var(--text-muted)] mb-1.5";
+  "w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)] transition-colors";
+const labelClass = "block text-xs text-[var(--text-soft)] mb-1.5";
 
 const emptyForm = { username: "", password: "", last_name: "", first_name: "", second_name: "", role: "" };
 
@@ -18,6 +20,10 @@ export default function UsersTab({ token, logout, navigate }) {
   const [form, setForm] = useState(emptyForm);
   const [formOpen, setFormOpen] = useState(false);
   const [error, setError] = useState(null);
+  const [resetModal, setResetModal] = useState({ isOpen: false, id: null, username: "" });
+  const [resetPwd, setResetPwd] = useState("");
+  const [resetError, setResetError] = useState(null);
+  const [resetSaving, setResetSaving] = useState(false);
 
   useEffect(() => {
     load();
@@ -61,27 +67,48 @@ export default function UsersTab({ token, logout, navigate }) {
     else setError(res.data?.error || "Не удалось удалить");
   }
 
+  function openResetPassword(u) {
+    setResetError(null);
+    setResetPwd("");
+    setResetModal({ isOpen: true, id: u.id, username: u.username });
+  }
+
+  function closeResetPassword() {
+    setResetModal({ isOpen: false, id: null, username: "" });
+  }
+
+  async function handleResetPassword(e) {
+    e.preventDefault();
+    setResetError(null);
+    if (resetPwd.length < 4) return setResetError("Пароль слишком короткий (минимум 4 символа)");
+    setResetSaving(true);
+    const res = await updateUser(token, resetModal.id, { new_password: resetPwd }, logout, navigate);
+    setResetSaving(false);
+    if (res.ok) {
+      closeResetPassword();
+    } else {
+      setResetError(res.data?.error || "Не удалось сменить пароль");
+    }
+  }
+
   const fullName = (u) => [u.last_name, u.first_name, u.second_name].filter(Boolean).join(" ") || "—";
 
   return (
-    <div className="space-y-5">
+    <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold">Пользователи</h2>
+        <h2 className="font-display text-base font-semibold uppercase tracking-wide">Пользователи</h2>
         {!formOpen && (
-          <button
-            onClick={() => { setForm(emptyForm); setFormOpen(true); }}
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer transition-colors"
-          >
-            <Plus size={18} /> Добавить
-          </button>
+          <Button variant="primary" size="sm" onClick={() => { setForm(emptyForm); setFormOpen(true); }}>
+            <Plus size={16} /> Добавить
+          </Button>
         )}
       </div>
 
       {formOpen && (
-        <form onSubmit={handleCreate} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-4 sm:p-5 shadow-sm animate-modalEnter">
+        <form onSubmit={handleCreate} className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 sm:p-5 animate-fadeIn">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium">Новый пользователь</h3>
-            <button type="button" onClick={() => setFormOpen(false)} className="p-1.5 rounded-lg hover:bg-[var(--surface-2)] text-[var(--text-muted)] cursor-pointer"><X size={18} /></button>
+            <Button type="button" variant="ghost" size="sm" onClick={() => setFormOpen(false)} aria-label="Закрыть"><X size={16} /></Button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div><label className={labelClass}>Логин *</label><input className={fieldClass} value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} /></div>
@@ -91,40 +118,66 @@ export default function UsersTab({ token, logout, navigate }) {
             <div><label className={labelClass}>Отчество</label><input className={fieldClass} value={form.second_name} onChange={(e) => setForm({ ...form, second_name: e.target.value })} /></div>
             <div><label className={labelClass}>Роль</label><BigSelect value={form.role} onChange={(v) => setForm({ ...form, role: v })} options={roleOptions} placeholder="Выберите роль" /></div>
           </div>
-          {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
+          {error && <p className="text-sm text-[var(--alarm)] mt-3">{error}</p>}
           <div className="flex gap-3 mt-4">
-            <button type="submit" className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer">Создать</button>
-            <button type="button" onClick={() => setFormOpen(false)} className="px-4 py-2 rounded-lg bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-sm cursor-pointer">Отмена</button>
+            <Button type="submit" variant="primary">Создать</Button>
+            <Button type="button" variant="secondary" onClick={() => setFormOpen(false)}>Отмена</Button>
           </div>
         </form>
       )}
 
-      {error && !formOpen && <p className="text-red-400 text-sm">{error}</p>}
+      {error && !formOpen && <p className="text-sm text-[var(--alarm)]">{error}</p>}
 
-      <div className="space-y-2">
+      <div className="flex flex-col gap-2">
         {users.length === 0 ? (
-          <p className="text-[var(--text-muted)] text-center py-6">Нет пользователей</p>
+          <p className="text-sm text-[var(--text-muted)] text-center py-6">Нет пользователей</p>
         ) : (
           users.map((u) => (
             <div key={u.id} className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="min-w-0">
-                <div className="font-medium text-[var(--text)] truncate">{fullName(u)}</div>
-                <div className="text-sm text-[var(--text-muted)]">@{u.username}</div>
+                <div className="text-sm font-medium text-[var(--text)] truncate">{fullName(u)}</div>
+                <div className="text-xs text-[var(--text-muted)]">@{u.username}</div>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <div className="w-44">
                   <BigSelect value={u.role} onChange={(v) => handleRoleChange(u.id, v)} options={roleOptions} />
                 </div>
+                <Button variant="ghost" size="sm" onClick={() => openResetPassword(u)} aria-label="Сменить пароль">
+                  <KeyRound size={15} />
+                </Button>
                 {String(me?.userId) !== String(u.id) && (
-                  <button onClick={() => handleDelete(u.id)} title="Удалить" className="p-2 rounded-lg bg-red-600/15 text-red-400 hover:bg-red-600/25 cursor-pointer transition-colors">
-                    <Trash2 size={16} />
-                  </button>
+                  <Button variant="ghost" size="sm" onClick={() => handleDelete(u.id)} aria-label="Удалить" className="hover:text-[var(--alarm)]">
+                    <Trash2 size={15} />
+                  </Button>
                 )}
               </div>
             </div>
           ))
         )}
       </div>
+
+      <Modal isOpen={resetModal.isOpen} onClose={closeResetPassword} title="Смена пароля" maxWidth="max-w-sm">
+        <form onSubmit={handleResetPassword} className="flex flex-col gap-4">
+          <p className="text-sm text-[var(--text-soft)] text-center -mt-1">
+            Новый пароль для <span className="font-medium text-[var(--text)]">@{resetModal.username}</span>
+          </p>
+          <input
+            className={fieldClass}
+            type="password"
+            autoFocus
+            value={resetPwd}
+            onChange={(e) => setResetPwd(e.target.value)}
+            placeholder="••••••"
+          />
+          {resetError && <p className="text-sm text-[var(--alarm)] text-center">{resetError}</p>}
+          <div className="flex justify-center gap-3">
+            <Button type="button" variant="secondary" onClick={closeResetPassword}>Отмена</Button>
+            <Button type="submit" variant="primary" disabled={resetSaving}>
+              {resetSaving ? "Сохранение..." : "Сохранить"}
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

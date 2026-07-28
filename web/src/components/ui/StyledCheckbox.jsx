@@ -1,30 +1,18 @@
 import React from "react";
+import { Check } from "lucide-react";
 
 export default function StyledCheckbox({ label, checked, onChange }) {
   const toggle = () => onChange(!checked);
 
   return (
-    <label
-      className="flex items-center gap-3 cursor-pointer select-none"
-      onClick={toggle}
-    >
-      <div
-        className={`w-6 h-6 rounded-md border transition-all duration-200 flex items-center justify-center
-        ${checked ? "bg-blue-600 border-blue-500" : "bg-[var(--bg)] border-[var(--border)] hover:border-[var(--border)]"}`}
+    <label className="flex items-center gap-2.5 cursor-pointer select-none" onClick={toggle}>
+      <span
+        className={`flex items-center justify-center w-5 h-5 rounded-md border transition-colors shrink-0
+          ${checked ? "bg-[var(--accent)] border-[var(--accent)]" : "bg-[var(--input)] border-[var(--border)]"}`}
       >
-        {checked && (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-3.5 w-3.5 text-white"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-          </svg>
-        )}
-      </div>
-      <span className="text-[var(--text-soft)]">{label}</span>
+        {checked && <Check size={13} strokeWidth={3} className="text-[var(--accent-contrast)]" />}
+      </span>
+      <span className="text-sm text-[var(--text-soft)]">{label}</span>
     </label>
   );
 }
