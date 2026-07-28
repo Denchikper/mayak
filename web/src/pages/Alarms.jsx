@@ -30,6 +30,10 @@ export default function AlarmsPage() {
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null, name: "" });
 
   useEffect(() => {
+    document.title = "Тревоги | Маяк";
+  }, []);
+
+  useEffect(() => {
     loadAlarms();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
