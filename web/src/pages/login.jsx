@@ -16,7 +16,7 @@ export default function Login() {
   const { login } = useAuth();
 
   useEffect(() => {
-    document.title = "Вход в систему | СУЗО";
+    document.title = "Вход в систему | Маяк";
   }, []);
 
   const handleChange = (e) => {

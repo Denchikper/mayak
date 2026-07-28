@@ -30,6 +30,10 @@ export default function DevicesPage() {
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null, name: "" });
 
   useEffect(() => {
+    document.title = "Устройства | Маяк";
+  }, []);
+
+  useEffect(() => {
     loadDevices();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
