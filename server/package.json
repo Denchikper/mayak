@@ -11,7 +11,7 @@
     "url": "git+https://github.com/Denchikper/mayak.git"
   },
   "license": "AFL-3.0",
-  "author": "Daniil Mankus'",
+  "author": "Daniel Benovich",
   "type": "commonjs",
   "main": "server.js",
   "scripts": {

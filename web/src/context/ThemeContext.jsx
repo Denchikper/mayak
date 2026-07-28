@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 const ThemeContext = createContext();

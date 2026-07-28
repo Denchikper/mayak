@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import Modal from "./ui/Modal";
 import Button from "./ui/Button";
 

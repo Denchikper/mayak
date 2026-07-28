@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {

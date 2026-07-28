@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React, { useEffect, useState } from "react";
 import { Bell, Clock, Repeat, Pencil, Trash2, Plus, Power, X } from "lucide-react";
 import BigSelect from "../ui/BigSelect";

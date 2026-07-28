@@ -1,3 +1,6 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React, { useEffect, useState } from "react";
 import { Plus, Trash2, X, KeyRound } from "lucide-react";
 import { getUsers, createUser, updateUser, deleteUser } from "../../api/users/users";

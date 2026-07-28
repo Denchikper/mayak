@@ -1,8 +1,12 @@
+// Маяк — система управления звуковыми оповещениями
+// by Benovich · https://github.com/Denchikper/mayak
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // ✅ добавляем навигацию
 import { loginUser } from "../api/auth"; // ✅ импорт API
 import { useAuth } from "../context/AuthContext.jsx";
 import { useEffect } from "react";
+import { APP_VERSION } from "../config";
 
 export default function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -103,7 +107,7 @@ export default function Login() {
             </button>
           </form>
 
-          <p className="mt-10 text-center text-xs font-mono text-[var(--text-muted)]">Версия 1.0.0</p>
+          <p className="mt-10 text-center text-xs font-mono text-[var(--text-muted)]">Версия {APP_VERSION}</p>
         </div>
       </main>
     </div>
