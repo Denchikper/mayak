@@ -22,7 +22,7 @@ export default function SystemStatus({ token, logout, navigate, activeAlarm, set
   const alarmActive = activeAlarm !== "Нет активных тревог";
 
   return (
-    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-5 w-full max-w-sm flex flex-col">
+    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-5 w-full flex flex-col">
       <div className="flex items-center justify-between">
         <h2 className="font-display text-base font-semibold uppercase tracking-wide">Состояние системы</h2>
         <span className="flex items-center gap-2 text-xs font-medium">

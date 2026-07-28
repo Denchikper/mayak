@@ -84,7 +84,7 @@ export default function AlarmControlPanel({ token, logout, navigate, setActiveAl
 
   return (
     <>
-      <div className="w-full max-w-sm bg-[var(--surface)] border border-[var(--border)] rounded-xl p-5 flex flex-col">
+      <div className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-xl p-5 flex flex-col">
         <h3 className="font-display text-base font-semibold uppercase tracking-wide mb-4">
           Управление тревогами
         </h3>

@@ -162,7 +162,7 @@ export default function PlannedTab({ token, logout, navigate }) {
   }
 
   return (
-    <div className="max-w-3xl">
+    <div>
       {/* Заголовок + кнопка добавления */}
       <div className="flex items-center justify-between mb-5 gap-3">
         <p className="text-sm text-[var(--text-muted)]">
@@ -179,7 +179,7 @@ export default function PlannedTab({ token, logout, navigate }) {
       {formOpen && (
         <form
           onSubmit={handleSubmit}
-          className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 sm:p-5 mb-6 animate-fadeIn"
+          className="max-w-2xl bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 sm:p-5 mb-6 animate-fadeIn"
         >
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium text-[var(--text)]">
@@ -280,7 +280,7 @@ export default function PlannedTab({ token, logout, navigate }) {
           </div>
         )
       ) : (
-        <div className="flex flex-col gap-2">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-2">
           {alerts.map((alert) => (
             <div
               key={alert.id}

@@ -3,7 +3,7 @@ import { Plus } from "lucide-react";
 
 export default function EditableDayColumn({ day, events, setLessonModalOpen, setDayChoicen, setEventsChoicen, handleDeleteLesson, onChange }) {
   return (
-    <div className="bg-[var(--surface-2)] border border-[var(--border)] rounded-xl p-3 flex flex-col min-w-[200px] h-full">
+    <div className="bg-[var(--surface-2)] border border-[var(--border)] rounded-xl p-3 flex flex-col min-w-[240px] h-full">
       <div className="text-center text-sm font-medium text-[var(--text)] pb-2 mb-2 border-b border-[var(--border)]">
         {day.name}
       </div>

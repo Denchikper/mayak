@@ -14,7 +14,7 @@ export default function EditableDaysGrid({ daysList, scenarioList, setLessonModa
   });
 
   return (
-    <div className="grid grid-flow-col auto-cols-[220px] gap-3 pb-3">
+    <div className="grid grid-flow-col auto-cols-[260px] gap-3 pb-3">
       {sortedDays.map(day => (
         <EditableDayColumn
           key={day.id}

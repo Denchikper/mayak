@@ -112,7 +112,7 @@ export default function DevicesPage() {
 
   return (
     <AppLayout>
-      <div className="max-w-3xl px-4 sm:px-6 lg:px-10 py-6 lg:py-10">
+      <div className="px-4 sm:px-6 lg:px-10 py-6 lg:py-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
           <h1 className="font-display text-2xl font-bold uppercase tracking-wide">Устройства</h1>
           <div className="flex items-center gap-2">
@@ -131,9 +131,9 @@ export default function DevicesPage() {
         {loading ? (
           <p className="text-sm text-[var(--text-muted)] text-center py-10">Загрузка устройств...</p>
         ) : (
-          <div className="flex flex-col gap-2 animate-fadeIn">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 animate-fadeIn">
             {devices.length === 0 ? (
-              <p className="text-sm text-[var(--text-muted)] text-center py-10">Нет зарегистрированных устройств</p>
+              <p className="col-span-full text-sm text-[var(--text-muted)] text-center py-10">Нет зарегистрированных устройств</p>
             ) : (
               devices.map((device) => (
                 <DeviceItem

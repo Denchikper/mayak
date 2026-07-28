@@ -111,13 +111,35 @@ export default function EditScheduleMenu({
         }
     };
 
+    // После удаления урока в номерах остальных образуется пробел (1 2 3 5 6) —
+    // пересчитываем event_order подряд в каждом дне, где есть пропуски.
+    const renumberScenarios = async (scenarios) => {
+        const result = [];
+        for (const scenario of scenarios) {
+            const events = [...(scenario.ScheduleEvents || [])].sort((a, b) => a.event_order - b.event_order);
+            const renumbered = [];
+            for (let i = 0; i < events.length; i++) {
+                const expectedOrder = i + 1;
+                let event = events[i];
+                if (event.event_order !== expectedOrder) {
+                    const res = await eventUpdate(token, event.id, { event_order: expectedOrder }, logout, navigate);
+                    if (res.ok) event = { ...event, event_order: expectedOrder };
+                }
+                renumbered.push(event);
+            }
+            result.push({ ...scenario, ScheduleEvents: renumbered });
+        }
+        return result;
+    };
+
     const handleDeleteLesson = async (event_id) => {
         const res = await deleteEventsByID(token, event_id, logout, navigate);
         if (res.ok) {
             const updatedScenarioList = await scenariosGet(token, schedulesActual.id, logout, navigate);
             if (updatedScenarioList.ok) {
-              setScenarioList(updatedScenarioList.data);
-            }   
+              const renumbered = await renumberScenarios(updatedScenarioList.data);
+              setScenarioList(renumbered);
+            }
         } else {
             console.error("Ошибка при удалении урока", res);
         }

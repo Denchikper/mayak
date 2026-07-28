@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Plus, Trash2, X } from "lucide-react";
+import { Plus, Trash2, X, KeyRound } from "lucide-react";
 import { getUsers, createUser, updateUser, deleteUser } from "../../api/users/users";
 import { getRoles } from "../../api/roles/roles";
 import BigSelect from "../ui/BigSelect";
 import Button from "../ui/Button";
+import Modal from "../ui/Modal";
 import { useAuth } from "../../context/AuthContext";
 
 const fieldClass =
@@ -19,6 +20,10 @@ export default function UsersTab({ token, logout, navigate }) {
   const [form, setForm] = useState(emptyForm);
   const [formOpen, setFormOpen] = useState(false);
   const [error, setError] = useState(null);
+  const [resetModal, setResetModal] = useState({ isOpen: false, id: null, username: "" });
+  const [resetPwd, setResetPwd] = useState("");
+  const [resetError, setResetError] = useState(null);
+  const [resetSaving, setResetSaving] = useState(false);
 
   useEffect(() => {
     load();
@@ -60,6 +65,30 @@ export default function UsersTab({ token, logout, navigate }) {
     const res = await deleteUser(token, id, logout, navigate);
     if (res.ok) await load();
     else setError(res.data?.error || "Не удалось удалить");
+  }
+
+  function openResetPassword(u) {
+    setResetError(null);
+    setResetPwd("");
+    setResetModal({ isOpen: true, id: u.id, username: u.username });
+  }
+
+  function closeResetPassword() {
+    setResetModal({ isOpen: false, id: null, username: "" });
+  }
+
+  async function handleResetPassword(e) {
+    e.preventDefault();
+    setResetError(null);
+    if (resetPwd.length < 4) return setResetError("Пароль слишком короткий (минимум 4 символа)");
+    setResetSaving(true);
+    const res = await updateUser(token, resetModal.id, { new_password: resetPwd }, logout, navigate);
+    setResetSaving(false);
+    if (res.ok) {
+      closeResetPassword();
+    } else {
+      setResetError(res.data?.error || "Не удалось сменить пароль");
+    }
   }
 
   const fullName = (u) => [u.last_name, u.first_name, u.second_name].filter(Boolean).join(" ") || "—";
@@ -113,6 +142,9 @@ export default function UsersTab({ token, logout, navigate }) {
                 <div className="w-44">
                   <BigSelect value={u.role} onChange={(v) => handleRoleChange(u.id, v)} options={roleOptions} />
                 </div>
+                <Button variant="ghost" size="sm" onClick={() => openResetPassword(u)} aria-label="Сменить пароль">
+                  <KeyRound size={15} />
+                </Button>
                 {String(me?.userId) !== String(u.id) && (
                   <Button variant="ghost" size="sm" onClick={() => handleDelete(u.id)} aria-label="Удалить" className="hover:text-[var(--alarm)]">
                     <Trash2 size={15} />
@@ -123,6 +155,29 @@ export default function UsersTab({ token, logout, navigate }) {
           ))
         )}
       </div>
+
+      <Modal isOpen={resetModal.isOpen} onClose={closeResetPassword} title="Смена пароля" maxWidth="max-w-sm">
+        <form onSubmit={handleResetPassword} className="flex flex-col gap-4">
+          <p className="text-sm text-[var(--text-soft)] text-center -mt-1">
+            Новый пароль для <span className="font-medium text-[var(--text)]">@{resetModal.username}</span>
+          </p>
+          <input
+            className={fieldClass}
+            type="password"
+            autoFocus
+            value={resetPwd}
+            onChange={(e) => setResetPwd(e.target.value)}
+            placeholder="••••••"
+          />
+          {resetError && <p className="text-sm text-[var(--alarm)] text-center">{resetError}</p>}
+          <div className="flex justify-center gap-3">
+            <Button type="button" variant="secondary" onClick={closeResetPassword}>Отмена</Button>
+            <Button type="submit" variant="primary" disabled={resetSaving}>
+              {resetSaving ? "Сохранение..." : "Сохранить"}
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

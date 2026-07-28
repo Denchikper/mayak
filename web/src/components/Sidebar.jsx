@@ -44,7 +44,7 @@ function NavList({ items, activePath, onNavigate }) {
             onClick={() => onNavigate(item.path)}
             className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors cursor-pointer text-left
               ${active
-                ? "bg-[var(--surface-2)] text-[var(--text)]"
+                ? "bg-[var(--accent)]/10 text-[var(--text)]"
                 : "text-[var(--text-soft)] hover:bg-[var(--surface-2)] hover:text-[var(--text)]"}`}
           >
             <Icon size={18} className={active ? "text-[var(--accent)]" : "text-[var(--text-muted)]"} />
